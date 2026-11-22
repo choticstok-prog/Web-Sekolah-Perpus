@@ -1067,60 +1067,70 @@
     }
 
     /**
-     * Load PDF with high performance PDF.js
+     * Load PDF with high performance Mozilla PDF.js Engine
      */
-    function initPdfCanvas() {
+    async function initPdfCanvas() {
         if (pdfDoc) return;
         if (canvasLoader) canvasLoader.classList.remove('d-none');
         if (canvasLoaderText) canvasLoaderText.textContent = 'Menghubungkan dokumen PDF...';
 
         if (typeof pdfjsLib === 'undefined') {
             console.error('PDF.js library is not loaded');
-            if (canvasLoader) canvasLoader.classList.add('d-none');
-            if (errorAlert) errorAlert.classList.remove('d-none');
+            activateFallbackViewer();
             return;
         }
 
-        const safetyTimeout = setTimeout(function () {
-            if (!pdfDoc) {
-                console.warn('PDF loading took over 25 seconds, switching to interactive fallback frame');
-                activateFallbackViewer();
-            }
-        }, 25000);
-
         try {
-            const loadingTask = pdfjsLib.getDocument({
-                url: pdfUrl,
-                cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
-                cMapPacked: true,
-                disableRange: true,
-                disableStream: false
-            });
+            // Fetch binary data directly to handle redirects and CORS reliably
+            const response = await fetch(pdfUrl);
+            if (!response.ok) {
+                throw new Error('HTTP ' + response.status + ' ' + response.statusText);
+            }
 
-            loadingTask.onProgress = function (progress) {
-                if (progress.total > 0) {
-                    const pct = Math.round((progress.loaded / progress.total) * 100);
+            const contentLength = response.headers.get('content-length');
+            const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
+            let loadedBytes = 0;
+
+            const reader = response.body.getReader();
+            const chunks = [];
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                loadedBytes += value.length;
+
+                if (totalBytes > 0) {
+                    const pct = Math.round((loadedBytes / totalBytes) * 100);
                     if (canvasLoaderText) canvasLoaderText.textContent = 'Memuat naskah buku... ' + pct + '%';
-                } else if (progress.loaded > 0) {
-                    const mb = (progress.loaded / (1024 * 1024)).toFixed(1);
+                } else {
+                    const mb = (loadedBytes / (1024 * 1024)).toFixed(1);
                     if (canvasLoaderText) canvasLoaderText.textContent = 'Mengunduh data (' + mb + ' MB)...';
                 }
-            };
+            }
 
-            loadingTask.promise.then(function (pdf) {
-                clearTimeout(safetyTimeout);
-                pdfDoc = pdf;
-                if (pageCountText) pageCountText.textContent = pdf.numPages;
-                if (pageNumInput) pageNumInput.max = pdf.numPages;
-                renderPage(pageNum);
-            }).catch(function (error) {
-                clearTimeout(safetyTimeout);
-                console.error('PDF.js loading error:', error);
-                activateFallbackViewer();
+            const allBytes = new Uint8Array(loadedBytes);
+            let offset = 0;
+            for (const chunk of chunks) {
+                allBytes.set(chunk, offset);
+                offset += chunk.length;
+            }
+
+            if (canvasLoaderText) canvasLoaderText.textContent = 'Merender halaman buku...';
+
+            const loadingTask = pdfjsLib.getDocument({
+                data: allBytes,
+                cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
+                cMapPacked: true,
             });
-        } catch (e) {
-            clearTimeout(safetyTimeout);
-            console.error('PDF.js execution error:', e);
+
+            const pdf = await loadingTask.promise;
+            pdfDoc = pdf;
+            if (pageCountText) pageCountText.textContent = pdf.numPages;
+            if (pageNumInput) pageNumInput.max = pdf.numPages;
+            renderPage(pageNum);
+        } catch (error) {
+            console.error('PDF.js loading error:', error);
             activateFallbackViewer();
         }
     }
