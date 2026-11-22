@@ -1000,7 +1000,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 14,
                 'description' => "Sinopsis Novel:\nLaskar Pelangi mengisahkan sepuluh anak dari keluarga penambang timah miskin di Desa Gantong, Pulau Belitung, yang bersekolah di sebuah SD Muhammadiyah sederhana yang nyaris ditutup. Di bawah bimbingan Bu Muslimah dan Pak Harfan yang ikhlas berdedikasi, anak-anak berjuluk 'Laskar Pelangi' (Ikal, Lintang si jenius autodidak, Mahar sang seniman, dll.) membuktikan bahwa keterbatasan ekonomi bukanlah penghalang untuk meraih ilmu, mencetak prestasi gemilang, dan memelihara keajaiban mimpi.\n\nPoin & Nilai Karakter:\n• Keteguhan tekad menuntut ilmu melintasi jarak puluhan kilometer.\n• Pengorbanan tulus seorang pendidik demi masa depan tunas bangsa.\n• Persahabatan sejati dan apresiasi terhadap keindahan budaya lokal.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-laskar-pelangi',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_laskar_pelangi.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-laskar-pelangi.png',
             ],
             [
@@ -1015,7 +1015,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 12,
                 'description' => "Sinopsis Novel:\nBuku kedua dari Tetralogi Laskar Pelangi ini menceritakan masa remaja Ikal, Arai, dan Jimbron saat menempuh pendidikan di SMA Negeri Manggar. Sembari bekerja keras sebagai kuli ngambat di dermaga ikan sejak dini hari demi membiayai sekolah mereka sendiri, trio pemimpi ini berani memelihara mimpi melintasi samudra: menuntut ilmu ke Université de Paris, Sorbonne, Prancis.\n\nPoin & Nilai Karakter:\n• Kekuatan harapan dan daya juang remaja pantang menyerah.\n• Hubungan kekeluargaan dan kesetiakawanan yang melampaui ikatan darah.\n• Inspirasi 'bermimpi sampai Tuhan memeluk mimpimu'.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-sang-pemimpi',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_sang_pemimpi.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-sang-pemimpi.png',
             ],
             [
@@ -1030,7 +1030,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 13,
                 'description' => "Sinopsis Novel:\nMahakarya sastra Indonesia dan bagian pertama dari Tetralogi Buru. Berlatar akhir abad ke-19 pada masa kolonial Hindia Belanda, novel ini mengisahkan Minke, seorang pemuda pribumi terpelajar yang menuntut ilmu di HBS Surabaya. Minke terpikat pada pesona Annelies Mellema, putri Nyai Ontosoroh—seorang gundik berintelektual tinggi dan berjiwa merdeka. Minke menghadapi keangkuhan sistem hukum kolonial yang merendahkan martabat pribumi.\n\nPoin & Nilai Karakter:\n• Semangat kebangkitan kesadaran kebangsaan dan kemanusiaan universal.\n• Kritik terhadap ketidakadilan hukum dan stratifikasi sosial kolonial.\n• Keberanian berpikir kritis dan menulis untuk memperjuangkan kebenaran.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-bumi-manusia',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_bumi_manusia.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-bumi-manusia.png',
             ],
             [
@@ -1045,7 +1045,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 10,
                 'description' => "Sinopsis Novel:\nJilid kedua Tetralogi Buru yang menandai babak kedewasaan pemikiran Minke. Setelah tragedi yang menimpa keluarganya, Minke diingatkan oleh sahabatnya, Jean Marais dan Khouw Ah Soe, bahwa seorang penulis pribumi sejati tidak boleh hanya mengagumi peradaban Barat dari balik jendela kota, melainkan harus mengenal tanah air dan rakyatnya sendiri yang menderita akibat tanam paksa di pedesaan.\n\nPoin & Nilai Karakter:\n• Transformasi intelektual dari kekaguman feodal menuju empati kerakyatan.\n• Pentingnya bahasa ibu dan kesadaran identitas nasional.\n• Solidaritas perjuangan antarbangsa melawan penindasan imperialisme.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-anak-semua-bangsa',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_anak_semua_bangsa.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-anak-semua-bangsa.png',
             ],
             [
@@ -1060,7 +1060,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 15,
                 'description' => "Sinopsis Novel:\nAlif Fikri dari Danau Maninjau terpaksa mengubur mimpinya masuk SMA umum demi memenuhi amanah ibunya untuk menuntut ilmu di Pondok Madani, sebuah pesantren modern di pelosok Ponorogo. Di sana, bersama lima sahabatnya dari berbagai latar budaya nusantara (Sahibul Menara), mereka ditempa dengan disiplin, kecakapan bahasa Arab dan Inggris, serta keyakinan teguh pada mantra 'Man Jadda Wajada' (siapa yang bersungguh-sungguh akan berhasil).\n\nPoin & Nilai Karakter:\n• Kebulatan tekad, kedisiplinan diri, dan kerja keras tanpa henti.\n• Harmoni keberagaman suku dan budaya dalam persaudaraan santri.\n• Menatap masa depan dengan visi global tanpa melupakan akar moral.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-negeri-5-menara',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_negeri_5_menara.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-negeri-5-menara.png',
             ],
             [
@@ -1075,7 +1075,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 12,
                 'description' => "Sinopsis Novel:\nBuku kedua trilogi Negeri 5 Menara. Alif Fikri melanjutkan perjuangannya menembus ujian masuk perguruan tinggi negeri hingga diterima di Universitas Padjadjaran Bandung. Menghadapi keterbatasan biaya dan kehilangan sosok ayah tercinta, Alif menguji mantra kedua: 'Man Shabara Zhafira' (siapa yang bersabar akan beruntung), yang membimbingnya menembus program pertukaran pemuda ke Saint-Raymond, Quebec, Kanada.\n\nPoin & Nilai Karakter:\n• Kesabaran aktif yang diwujudkan melalui aksi nyata dan persistensi.\n• Berbakti kepada orang tua dan mengelola duka menjadi kekuatan.\n• Diplomasi budaya generasi muda di kancah internasional.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-ranah-3-warna',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_ranah_3_warna.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-ranah-3-warna.png',
             ],
             [
@@ -1090,7 +1090,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 17,
                 'description' => "Sinopsis Novel:\nSebuah novel fiksi ilmiah romansa berlatar tahun 2042 hingga 2050 pasca bencana letusan gunung api dahsyat yang meluluhlantakkan iklim global. Mengisahkan Lail, gadis yatim piatu korban bencana, dan Esok (Soke Bahtera), seorang pemuda jenius pembuat teknologi kapal evakuasi antariksa. Ketika kepedihan masa lalu mendorong Lail ingin menghapus ingatannya tentang hujan, ia harus memilih antara melupakan rasa sakit atau merawat kenangan cinta dan pengorbanan.\n\nPoin & Nilai Karakter:\n• Keberanian memaafkan takdir dan berdamai dengan masa lalu.\n• Nilai kemanusiaan, kerelawanan medis, dan ketulusan berbagi di masa sulit.\n• Etika pemanfaatan teknologi kecerdasan buatan dan rekayasa cuaca.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-hujan',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_hujan.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-hujan.png',
             ],
             [
@@ -1105,7 +1105,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 14,
                 'description' => "Sinopsis Novel:\nBuku pertama serial petualangan dunia paralel. Raib adalah siswi SMA berusia 15 tahun yang memiliki kemampuan unik bisa menghilang hanya dengan menutup wajahnya dengan kedua telapak tangan. Bersama sahabatnya Seli yang mampu mengeluarkan petir dan Ali si jenius eksentrik, mereka terseret ke dalam pertarungan lintas dimensi di Klan Bulan melawan Tamus yang berniat menguasai seluruh dunia paralel.\n\nPoin & Nilai Karakter:\n• Keberanian membela kebenaran dan melindungi sahabat di situasi genting.\n• Eksplorasi imajinasi sains, fisika paralel, dan petualangan fantasi seru.\n• Menerima keunikan diri sebagai kekuatan positif untuk kebaikan bersama.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-bumi',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_bumi.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-bumi.png',
             ],
             [
@@ -1120,7 +1120,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 13,
                 'description' => "Sinopsis Novel:\nPetualangan lanjutan dari Raib, Seli, dan Ali bersama Miss Selena dan Av. Mereka diundang ke Klan Matahari untuk menghadiri festival tahunan mencari bunga matahari pertama yang mekar. Namun, di balik kemegahan festival tersebut tersimpan konspirasi politik berbahaya yang mengancam kehancuran Klan Bumi dan Klan Bulan. Trio sahabat ini harus melintasi rintangan alam liar yang mematikan.\n\nPoin & Nilai Karakter:\n• Solidaritas kelompok dan pemecahan masalah secara kreatif di alam terbuka.\n• Menghormati kearifan ekologi dan ekosistem dunia paralel.\n• Kepemimpinan bijaksana dan kepedulian terhadap keadilan antarbangsa.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-bulan',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_bulan.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-bulan.png',
             ],
             [
@@ -1135,7 +1135,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 14,
                 'description' => "Sinopsis Novel:\nKugy, seorang gadis unik pecinta dongeng yang percaya dirinya adalah utusan Dewa Neptunus, selalu menuliskan curahan hatinya di secarik kertas, melipatnya menjadi perahu, lalu melarungkannya ke air. Ia bertemu Keenan, pemuda berbakat melukis yang dipaksa ayahnya kuliah manajemen. Keduanya saling melengkapi mimpi masing-masing, namun terpisahkan oleh kesalahpahaman, cinta lain, dan pilihan hidup dewasa sebelum takdir mempertemukan mereka kembali.\n\nPoin & Nilai Karakter:\n• Menemukan keberanian mengejar panggilan jiwa (passion) dan cita-cita seni.\n• Kejujuran pada kata hati dan ketulusan memupuk cinta yang dewasa.\n• Pentingnya ruang ekspresi kreatif dan dongeng edukasi bagi anak-anak.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-perahu-kertas',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_perahu_kertas.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-perahu-kertas.png',
             ],
             [
@@ -1150,7 +1150,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 11,
                 'description' => "Sinopsis Novel:\nSebuah karya fiksi misteri fantasi yang mengeksplorasi indra penciuman dan kekayaan botani Indonesia. Jati Wesi, seorang pemuda dari perkampungan Bantar Gebang yang memiliki indra penciuman luar biasa tajam, dipekerjakan oleh Raras Prayagung untuk melacak Puspa Karsa—tanaman mitos misterius di Gunung Lawu yang aromanya konon dapat mengendalikan kehendak siapa pun yang menghirupnya. Bersama Tanaya Suma, Jati mengungkap rahasia asal-usul kelam masa lalunya.\n\nPoin & Nilai Karakter:\n• Eksplorasi kekayaan flora, rempah-rempah, dan warisan mitologi Nusantara.\n• Hubungan antara ambisi manusia, batasan moral, dan kelestarian alam.\n• Kesadaran diri dan integritas di tengah godaan kekuatan mutlak.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-aroma-karsa',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_aroma_karsa.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-aroma-karsa.png',
             ],
             [
@@ -1165,7 +1165,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 14,
                 'description' => "Sinopsis Novel:\nLima sahabat karib (Zafran, Riani, Genta, Arial, Ian) merasa jenuh dengan rutinitas pertemanan mereka dan sepakat untuk 'berpuasa' tidak berkomunikasi selama tiga bulan penuh. Setelah masa pembuktian diri selesai, mereka merayakan reuni dengan melakukan perjalanan menantang menuju Puncak Mahameru (3.676 mdpl), puncak tertinggi Pulau Jawa. Di sanalah cinta, nasionalisme, dan filosofi menaruh mimpi '5 sentimeter di depan kening' diuji.\n\nPoin & Nilai Karakter:\n• Menghargai alam nusantara dan menumbuhkan rasa cinta tanah air yang kuat.\n• Membangun kemandirian pribadi tanpa merusak kekompakan persahabatan.\n• Kekuatan keyakinan: biarkan impianmu menggantung tepat di depan matamu.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-5-cm',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_5_cm.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-5-cm.png',
             ],
             [
@@ -1180,7 +1180,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 11,
                 'description' => "Sinopsis Novel:\nRoman sastra klasik karya ulama dan sastrawan besar Buya Hamka. Mengisahkan Zainuddin, pemuda yatim piatu berdarah campuran Minang dan Bugis, yang jatuh hati kepada Hayati, gadis jelita keturunan bangsawan suku Minangkabau. Cinta murni keduanya kandas karena penolakan keluarga Hayati yang kaku terhadap adat garis keturunan dan harta, hingga Hayati dinikahkan dengan Aziz. Ketika Aziz jatuh miskin dan bunuh diri, Hayati pulang menumpangi kapal megah Van der Wijck yang berujung tragedi tenggelam di perairan Lamongan.\n\nPoin & Nilai Karakter:\n• Kritik konstruktif terhadap formalitas adat yang mengorbankan nurani manusia.\n• Keikhlasan, kesalehan pribadi, dan etika sastra bernilai moral luhur.\n• Keindahan diksi bahasa Melayu-Indonesia klasik yang sangat puitis dan bermakna.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-tenggelamnya-kapal-van-der-wijck',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_tenggelamnya_kapal_van_der_wijck.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-tenggelamnya-kapal-van-der-wijck.png',
             ],
             [
@@ -1195,7 +1195,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 9,
                 'description' => "Sinopsis Novel:\nTrilogi novel sosiologis yang menuturkan kehidupan Srintil, seorang yatim piatu di desa miskin Dukuh Paruk yang dinobatkan menjadi ronggeng karena kemahirannya menari. Di sisi lain, Rasus, sahabat masa kecil Srintil, memilih meninggalkan desa dan menjadi tentara karena menolak tradisi desanya yang mengeksploitasi perempuan. Keduanya kemudian terjebak dalam pusaran pergolakan politik nasional tahun 1965 yang melanda perdesaan Jawa.\n\nPoin & Nilai Karakter:\n• Pemahaman antropologis tentang tradisi lokal, mitos pedesaan, dan kemiskinan.\n• Refleksi empati atas nasib kaum perempuan dan rakyat kecil yang terpinggirkan.\n• Bahasa deskriptif alam dan fauna yang luar biasa kaya dan memikat.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-ronggeng-dukuh-paruk',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_ronggeng_dukuh_paruk.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-ronggeng-dukuh-paruk.png',
             ],
             [
@@ -1210,7 +1210,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 10,
                 'description' => "Sinopsis Novel:\nNovel realisme magis internasional karya Eka Kurniawan yang berlatar kota pesisir fiktif Halimunda. Mengisahkan kehidupan Dewi Ayu, seorang perempuan indo-Belanda yang bangkit dari kuburnya setelah 21 tahun kematiannya, dan menelusuri kisah keempat anak perempuannya. Melalui kisah keluarga ini, novel merekam sejarah kelam penjajahan kolonial, invasi pendudukan Jepang, perang kemerdekaan, hingga tragedi pembantaian politik dengan gaya penceritaan satir dan alegoris.\n\nPoin & Nilai Karakter:\n• Keberanian eksplorasi sastra kontemporer bernilai estetika tinggi.\n• Pembacaan kritis terhadap trauma sejarah bangsa dan dampaknya pada generasi penerus.\n• Kreativitas menggabungkan tradisi lisan wayang dengan sastra modern dunia.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-cantik-itu-luka',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_cantik_itu_luka.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-cantik-itu-luka.png',
             ],
             [
@@ -1225,7 +1225,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 12,
                 'description' => "Sinopsis Novel:\nKetika pemilik pabrik kretek besar Djagad Raja, Soeraja, sedang sekarat, ia terus-menerus menyebut satu nama perempuan: Jeng Yah. Ketiga putranya (Tegar, Karim, Lebas) berpacu dengan waktu menelusuri pelosok Jawa Tengah untuk mencari sosok Jeng Yah sebelum ajal menjemput sang ayah. Pencarian ini menyingkap sejarah persaingan bisnis kretek lokal di Kota M, resep saus tembakau rahasia, serta cinta segitiga yang terkubur oleh pergolakan sejarah masa lalu.\n\nPoin & Nilai Karakter:\n• Pengenalan warisan industri kearifan lokal rempah nusantara (tembakau & cengkih).\n• Nilai kejujuran sejarah keluarga dan perdamaian antargenerasi.\n• Keteguhan seorang wanita perintis resep saus di era yang didominasi kaum pria.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-gadis-kretek',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_gadis_kretek.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-gadis-kretek.png',
             ],
             [
@@ -1240,7 +1240,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 15,
                 'description' => "Sinopsis Novel:\nNovel sejarah fiksi bertema kemanusiaan dan keadilan sosial yang memukau. Bagian pertama diceritakan dari sudut pandang Biru Laut, mahasiswa sastra dan aktivis gerakan mahasiswa 'Winatra' yang diculik, disekap, dan akhirnya ditenggelamkan ke dasar laut menjelang Reformasi 1998. Bagian kedua dituturkan oleh adiknya, Asmara Jati, yang bersama para keluarga korban penculikan terus memperjuangkan keadilan, menyuarakan kebenaran, dan merawat ingatan agar para korban tak pernah hilang dari sejarah bangsa.\n\nPoin & Nilai Karakter:\n• Nilai cinta tanah air, idealisme pemuda, dan integritas moral dalam memperjuangkan demokrasi.\n• Ketabahan luar biasa para keluarga penyintas dalam menegakkan hak asasi manusia.\n• Pentingnya mendokumentasikan kebenaran sejarah agar tidak terulang di masa depan.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-laut-bercerita',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_laut_bercerita.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-laut-bercerita.png',
             ],
             [
@@ -1255,7 +1255,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 11,
                 'description' => "Sinopsis Novel:\nSebuah novel epik berlatar peristiwa 1965 di Jakarta dan Mei 1998 di Paris. Mengisahkan Dimas Suryo, seorang wartawan kantor berita yang paspornya dicabut pemerintah sehingga terlunta-lunta di Eropa sebagai eksil politik tanpa kewarganegaraan. Bersama tiga sahabatnya, ia mendirikan restoran Indonesia di Paris untuk merawat kerinduan tanah air. Tiga puluh tahun kemudian, putrinya Lintang Manikmaya pergi ke Jakarta untuk menyelesaikan tugas film dokumenter skripsinya dan menyaksikan letupan demonstrasi Reformasi 1998.\n\nPoin & Nilai Karakter:\n• Memahami arti kepulangan sejati, identitas bangsa, dan kecintaan pada tanah air.\n• Rekonsiliasi antargenerasi atas luka masa lalu demi masa depan yang lebih damai.\n• Nilai ketahanan keluarga dalam menghadapi goncangan sosial dan politik global.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-pulang',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_pulang.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-pulang.png',
             ],
             [
@@ -1270,7 +1270,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 17,
                 'description' => "Sinopsis Novel:\nKisah romansa masa SMA di Kota Bandung tahun 1990 yang diceritakan kembali oleh Milea Adnan Hussain. Milea yang baru pindah dari Jakarta bertemu Dilan, seorang siswa SMA yang cerdas, panglima tempur geng motor, menyukai karya sastra, dan memiliki cara unik dalam mendekati perempuan dengan puisi-puisi jenaka dan kejutan tak terduga. Hubungan mereka penuh kehangatan, humor, dan romantika masa muda yang khas Indonesia tahun sembilan puluhan.\n\nPoin & Nilai Karakter:\n• Kejujuran dalam berekspresi, rasa hormat kepada orang tua, dan kepedulian terhadap sesama kawan.\n• Nilai humor yang santun, kepiawaian bertutur kata puitis, dan keberanian membela kebenaran.\n• Nostalgia kehangatan interaksi sosial masa remaja sebelum era serbuan gawai digital.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-dilan-1990',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_dilan_1990.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-dilan-1990.png',
             ],
             [
@@ -1285,7 +1285,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 11,
                 'description' => "Sinopsis Novel:\nTonggak sejarah kesusastraan modern Indonesia terbitan Balai Pustaka. Mengisahkan cinta suci antara Samsulbahri dan Sitti Nurbaya di Padang. Ketika ayah Sitti Nurbaya, Bagindo Sulaiman, terjerat utang piutang licik oleh rentenir kaya Datuk Maringgih, Nurbaya berkorban merelakan dirinya dinikahi Datuk Maringgih demi menyelamatkan ayahnya dari kebangkrutan dan penjara. Pengorbanan ini berujung pada kematian Nurbaya oleh racun dan kembalinya Samsulbahri sebagai Letnan Mas dalam pertempuran melawan pemberontakan pajak.\n\nPoin & Nilai Karakter:\n• Pengorbanan anak demi bakti dan keselamatan martabat orang tua.\n• Kritik awal pergerakan emansipasi wanita terhadap kawin paksa dan lintah darat.\n• Karya rujukan sastra wajib kurikulum nasional yang kaya akan peribahasa dan pantun klasik.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/novel-sitti-nurbaya',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sastra/novel_sitti_nurbaya.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/novel-sitti-nurbaya.png',
             ],
             [
@@ -1300,7 +1300,7 @@ class DatabaseSeeder extends Seeder
                 'available_stock' => 15,
                 'description' => "Sinopsis Buku:\nMenelusuri jejak perjalanan megah klub sepak bola paling legendaris di dunia, Manchester United Football Club, mulai dari berdirinya sebagai Newton Heath LYR FC pada tahun 1878 oleh para pekerja rel kereta api hingga era keemasan di bawah manajer legendaris Sir Matt Busby dan Sir Alex Ferguson. Buku ini mendokumentasikan tragedi Munich 1958, kebangkitan The Busby Babes, kejayaan Treble Winners 1999 yang bersejarah, hingga perkembangan Old Trafford sebagai 'Theatre of Dreams'.\n\nPoin & Nilai Karakter:\n• Ketahanan mental dan kemampuan bangkit dari tragedi kelam (Resilience).\n• Filosofi pantang menyerah hingga detik terakhir pertarungan (Never Give Up).\n• Pembinaan generasi muda (Busby Babes & Class of '92) sebagai pondasi kejayaan berkelanjutan.",
                 'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/sejarah-manchester-united',
-                'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/sejarah/sejarah_manchester_united.pdf',
+                'pdf_url' => null,
                 'cover_image' => '/images/covers/sejarah-manchester-united.png',
             ],
         ];
