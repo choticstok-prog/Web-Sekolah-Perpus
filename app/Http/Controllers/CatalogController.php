@@ -140,8 +140,13 @@ class CatalogController extends Controller
             $novelStory = NovelStoryContent::get($book->title);
         }
 
+        $effectivePdfUrl = (! empty($book->pdf_url) && filter_var($book->pdf_url, FILTER_VALIDATE_URL))
+            ? $book->pdf_url
+            : route('catalog.pdf', $book);
+
         return view('catalog.read', [
             'book' => $book,
+            'effectivePdfUrl' => $effectivePdfUrl,
             'relatedBooks' => $relatedBooks,
             'novelStory' => $novelStory,
         ]);
