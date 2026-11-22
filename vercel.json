@@ -31,7 +31,7 @@
   ],
   "env": {
     "APP_ENV": "production",
-    "APP_DEBUG": "true",
+    "APP_DEBUG": "false",
     "APP_KEY": "base64:JssUyCXSaptHuqntIe4w3QOm1MUlJJjxr0Ic4R41Wro=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -42,11 +42,7 @@
     "CACHE_STORE": "array",
     "SESSION_DRIVER": "cookie",
     "LOG_CHANNEL": "stderr",
-    "DB_CONNECTION": "mysql",
-    "DB_HOST": "sql310.infinityfree.com",
-    "DB_PORT": "3306",
-    "DB_DATABASE": "if0_43504128_perpus_online",
-    "DB_USERNAME": "if0_43504128",
-    "DB_PASSWORD": "NOoUxREhKH"
+    "DB_CONNECTION": "sqlite",
+    "DB_DATABASE": "/tmp/database.sqlite"
   }
 }
