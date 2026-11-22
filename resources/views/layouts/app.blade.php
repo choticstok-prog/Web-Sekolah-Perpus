@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Perpustakaan SMA/SMK - Peminjaman Buku Pelajaran') - PustakaSekolah</title>
+    <title>@yield('title', 'Perpustakaan Online SMP, SMA & SMK - Pustaka Digital & E-Reader') - PustakaSekolah</title>
 
     <!-- Immediate Theme Initialization (Mencegah Layar Kedip Hitam/Putih) -->
     <script>
@@ -29,33 +29,32 @@
         :root {
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
-            --secondary-color: #0ea5e9;
-            --accent-color: #f59e0b;
+            --secondary-color: #475569;
+            --accent-color: #2563eb;
             --body-bg: #f8fafc;
             --card-bg: #ffffff;
             --card-border: #e2e8f0;
-            --navbar-bg: rgba(255, 255, 255, 0.94);
-            --topbar-bg: #f1f5f9;
-            --text-main: #1e293b;
+            --navbar-bg: rgba(255, 255, 255, 0.96);
+            --text-main: #0f172a;
             --text-muted: #64748b;
         }
 
         [data-bs-theme="dark"] {
             --primary-color: #3b82f6;
             --primary-hover: #60a5fa;
-            --secondary-color: #38bdf8;
-            --accent-color: #fbbf24;
+            --secondary-color: #94a3b8;
+            --accent-color: #60a5fa;
             --body-bg: #0b0f19;
             --card-bg: #151d30;
             --card-border: #23304a;
-            --navbar-bg: rgba(15, 23, 42, 0.94);
-            --topbar-bg: #0d1424;
+            --navbar-bg: rgba(15, 23, 42, 0.96);
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
         }
 
         html {
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.25s ease, color 0.25s ease;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -69,72 +68,12 @@
             position: relative;
         }
 
-        /* Ambient Living Gradient Orbs (Background Bergerak Hidup) */
+        /* Ambient elements disabled for clean, non-distracting reading experience */
         .ambient-canvas-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            z-index: -1;
-            pointer-events: none;
+            display: none !important;
         }
 
-        .ambient-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(85px);
-            opacity: 0.22;
-            animation: orbFloat 22s infinite alternate ease-in-out;
-        }
 
-        [data-bs-theme="dark"] .ambient-orb {
-            opacity: 0.16;
-            filter: blur(95px);
-        }
-
-        .ambient-orb-1 {
-            width: 480px;
-            height: 480px;
-            background: radial-gradient(circle, #3b82f6 0%, rgba(37, 99, 235, 0.2) 70%);
-            top: -120px;
-            left: -120px;
-        }
-
-        .ambient-orb-2 {
-            width: 520px;
-            height: 520px;
-            background: radial-gradient(circle, #06b6d4 0%, rgba(14, 165, 233, 0.2) 70%);
-            bottom: 5%;
-            right: -150px;
-            animation-duration: 26s;
-            animation-delay: -6s;
-        }
-
-        .ambient-orb-3 {
-            width: 360px;
-            height: 360px;
-            background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0.15) 70%);
-            top: 45%;
-            left: 45%;
-            animation-duration: 20s;
-            animation-delay: -12s;
-        }
-
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            50% { transform: translate(45px, 65px) scale(1.12) rotate(45deg); }
-            100% { transform: translate(-35px, 35px) scale(0.92) rotate(-30deg); }
-        }
-
-        /* Top Operational Live Bar */
-        .top-live-bar {
-            background-color: var(--topbar-bg);
-            border-bottom: 1px solid var(--card-border);
-            font-size: 0.8rem;
-            transition: all 0.3s ease;
-        }
 
         .navbar {
             background-color: var(--navbar-bg);
@@ -265,36 +204,18 @@
         }
 
         .card-hover:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 18px 30px -6px rgba(15, 23, 42, 0.14), 0 8px 14px -6px rgba(15, 23, 42, 0.08) !important;
-            border-color: rgba(37, 99, 235, 0.4) !important;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -4px rgba(15, 23, 42, 0.08), 0 4px 8px -2px rgba(15, 23, 42, 0.04) !important;
+            border-color: rgba(37, 99, 235, 0.3) !important;
         }
 
         [data-bs-theme="dark"] .card-hover:hover {
-            box-shadow: 0 20px 32px -4px rgba(0, 0, 0, 0.5), 0 0 18px rgba(59, 130, 246, 0.25) !important;
-            border-color: rgba(59, 130, 246, 0.5) !important;
+            box-shadow: 0 16px 28px -4px rgba(0, 0, 0, 0.45) !important;
+            border-color: rgba(59, 130, 246, 0.4) !important;
         }
 
-        /* Card Shine Sweep Effect */
         .card-shine {
             position: relative;
-            overflow: hidden;
-        }
-        .card-shine::after {
-            content: '';
-            position: absolute;
-            top: -60%;
-            left: -60%;
-            width: 220%;
-            height: 220%;
-            background: linear-gradient(60deg, transparent 40%, rgba(255, 255, 255, 0.16) 50%, transparent 60%);
-            transform: rotate(25deg) translateY(-100%);
-            transition: transform 0.75s ease;
-            pointer-events: none;
-            z-index: 5;
-        }
-        .card-shine:hover::after {
-            transform: rotate(25deg) translateY(100%);
         }
 
         /* ========================================================
@@ -367,6 +288,12 @@
             margin-top: 0.85rem;
         }
 
+        @media (min-width: 768px) {
+            .border-start-md {
+                border-left: 1px solid var(--card-border) !important;
+            }
+        }
+
         .stat-link i {
             font-size: 0.85rem;
             transition: transform 0.2s ease;
@@ -417,13 +344,120 @@
             background-color: var(--card-bg);
             border-color: var(--card-border) !important;
             color: var(--text-main);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
         }
         .theme-toggle-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            border-color: var(--primary-color) !important;
             color: var(--primary-color);
+        }
+
+        /* Navbar User Profile Pill Button (Rapi & Modern) */
+        .nav-user-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            border-radius: 50rem;
+            padding: 0.2rem 0.65rem 0.2rem 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            height: 36px;
+        }
+
+        .nav-user-btn::after {
+            display: none !important;
+        }
+
+        .nav-user-btn:hover,
+        .nav-user-btn:focus-visible,
+        .nav-user-btn[aria-expanded="true"] {
+            border-color: var(--primary-color);
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.12);
+            transform: translateY(-1px);
+        }
+
+        [data-bs-theme="dark"] .nav-user-btn {
+            background-color: rgba(21, 29, 48, 0.9);
+            border-color: var(--card-border);
+        }
+
+        [data-bs-theme="dark"] .nav-user-btn:hover,
+        [data-bs-theme="dark"] .nav-user-btn[aria-expanded="true"] {
+            border-color: #60a5fa;
+            box-shadow: 0 4px 12px rgba(96, 165, 250, 0.15);
+            background-color: rgba(27, 38, 62, 0.95);
+        }
+
+        .nav-user-btn .user-avatar {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+            flex-shrink: 0;
+        }
+
+        .nav-user-btn .user-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            line-height: 1.15;
+            max-width: 120px;
+        }
+
+        .nav-user-btn .user-name {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .nav-user-btn .user-role {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            line-height: 1;
+            margin-top: 1px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-user-btn .user-chevron {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            margin-left: 0.1rem;
+        }
+
+        .dropdown.show .nav-user-btn .user-chevron,
+        .nav-user-btn[aria-expanded="true"] .user-chevron {
+            transform: rotate(180deg);
         }
 
         /* Floating Theme Feedback Toast */
@@ -498,20 +532,20 @@
             animation: pulseRing 2s infinite;
         }
 
-        /* Tombol Hijau Khas Baca Online Sekarang (btn-reader) */
+        /* Tombol Baca Online Sekarang (btn-reader) - Tenang & Harmonis */
         .btn-reader {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%) !important;
+            background-color: var(--primary-color) !important;
             color: #ffffff !important;
-            border: none !important;
+            border: 1px solid transparent !important;
             font-weight: 600;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2) !important;
         }
 
         .btn-reader:hover {
-            background: linear-gradient(135deg, #047857 0%, #059669 100%) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(16, 185, 129, 0.5) !important;
+            background-color: var(--primary-hover) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
             color: #ffffff !important;
         }
 
@@ -666,7 +700,7 @@
         .badge-white *,
         .badge.bg-white,
         .badge.bg-white *,
-        .bg-white .text-dark,
+        .hero-search-box .text-dark,
         .bg-warning.text-dark,
         .bg-warning .text-dark {
             color: #0f172a !important;
@@ -679,12 +713,38 @@
         [data-bs-theme="dark"] .badge-white *,
         [data-bs-theme="dark"] .badge.bg-white,
         [data-bs-theme="dark"] .badge.bg-white *,
-        [data-bs-theme="dark"] .bg-white .text-dark,
-        [data-bs-theme="dark"] .bg-white span.text-dark,
+        [data-bs-theme="dark"] .hero-search-box .text-dark,
+        [data-bs-theme="dark"] .hero-search-box span.text-dark,
         [data-bs-theme="dark"] .bg-warning.text-dark,
         [data-bs-theme="dark"] .bg-warning .text-dark,
         [data-bs-theme="dark"] .bg-warning span.text-dark {
             color: #0f172a !important;
+        }
+
+        /* 3 Steps Guide Section (Konsisten & Kontras di Mode Terang maupun Gelap) */
+        .step-guide-wrapper {
+            background-color: var(--card-bg);
+            border-color: var(--card-border) !important;
+        }
+        [data-bs-theme="light"] .step-guide-wrapper {
+            background-color: #f8fafc;
+        }
+        .step-guide-card {
+            background-color: var(--card-bg);
+            border-color: var(--card-border) !important;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .step-guide-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important;
+        }
+        .step-guide-heading,
+        .step-guide-title {
+            color: var(--text-main) !important;
+        }
+        [data-bs-theme="dark"] .step-guide-heading,
+        [data-bs-theme="dark"] .step-guide-title {
+            color: #ffffff !important;
         }
 
         /* Badge Angka Jumlah Buku di Filter Mapel */
@@ -1062,50 +1122,12 @@
 </head>
 <body>
 
-    <!-- Ambient Living Gradient Orbs (Background Bergerak Hidup) -->
-    <div class="ambient-canvas-wrapper" aria-hidden="true">
-        <div class="ambient-orb ambient-orb-1"></div>
-        <div class="ambient-orb ambient-orb-2"></div>
-        <div class="ambient-orb ambient-orb-3"></div>
-    </div>
-
-    <!-- Live Operational Ticker & School Info Top Bar (Membuat Web Hidup) -->
-    <div class="top-live-bar py-1 px-3 border-bottom">
-        <div class="container-fluid px-3 px-md-4 px-xl-5 d-flex flex-wrap justify-content-between align-items-center gap-2 small" style="max-width: 1440px;">
-            <div class="d-flex align-items-center gap-2 gap-sm-3 flex-wrap">
-                <span class="d-inline-flex align-items-center gap-1 fw-bold text-primary" id="liveGreetingWrapper">
-                    <span id="liveGreetingIcon">🌅</span>
-                    <span id="liveGreetingText">Selamat Belajar</span>
-                </span>
-                <span class="text-secondary opacity-50 d-none d-sm-inline">|</span>
-                <span class="d-inline-flex align-items-center gap-1 text-muted" id="liveClockWrapper">
-                    <i class="bi bi-clock-history text-secondary"></i>
-                    <span id="liveClockText">WIB</span>
-                </span>
-                <span class="text-secondary opacity-50 d-none d-sm-inline">|</span>
-                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill py-1 px-2 d-inline-flex align-items-center gap-1">
-                    <span class="live-dot" style="width: 6px; height: 6px;"></span>
-                    <span><strong id="liveReadersNum">21</strong> Siswa Sedang Membaca</span>
-                </span>
-            </div>
-
-            <!-- Dynamic Literacy Quotes Cycling -->
-            <div class="d-none d-lg-flex align-items-center gap-2 text-truncate" style="max-width: 460px;">
-                <i class="bi bi-quote text-warning fs-6"></i>
-                <span id="quoteTickerText" class="text-muted text-truncate fst-italic" style="font-size: 0.78rem;">
-                    "Membaca adalah jendela dunia dan kunci masa depan."
-                </span>
-            </div>
-        </div>
-    </div>
-
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg sticky-top py-2.5 py-lg-3">
         <div class="container-fluid px-3 px-md-4 px-xl-5" style="max-width: 1440px;">
             <a class="navbar-brand d-flex align-items-center gap-2 flex-shrink-0" href="{{ route('home') }}">
-                <i class="bi bi-mortarboard-fill text-primary fs-3 animate-float"></i>
+                <i class="bi bi-mortarboard-fill text-primary fs-4"></i>
                 <span>Pustaka<span class="text-secondary brand-subtext">Sekolah</span></span>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill small ms-1 brand-badge d-none d-xl-inline-block" style="font-size: 0.65rem; font-weight: 700;">SMA / SMK</span>
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -1121,25 +1143,16 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link px-2 px-xl-2.5 {{ request()->routeIs('catalog.index') && !request('baca_online') ? 'active' : '' }}" href="{{ route('catalog.index') }}">
-                            <i class="bi bi-grid me-1"></i> <span class="d-none d-xl-inline">Katalog Buku</span><span class="d-inline d-xl-none">Katalog</span>
+                            <i class="bi bi-grid me-1"></i> <span class="d-none d-xl-inline">Koleksi Buku</span><span class="d-inline d-xl-none">Koleksi</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link px-2 px-xl-2.5 d-flex align-items-center gap-1 {{ request('baca_online') ? 'active fw-bold text-success' : 'text-success fw-semibold' }}" href="{{ route('catalog.index', ['baca_online' => 1]) }}">
-                            <span class="live-dot me-1"></span>
+                        <a class="nav-link px-2 px-xl-2.5 d-flex align-items-center gap-1 {{ request('baca_online') ? 'active fw-bold' : '' }}" href="{{ route('catalog.index', ['baca_online' => 1]) }}">
+                            <i class="bi bi-book-half me-1"></i>
                             <span>Baca Online</span>
-                            <span class="badge badge-reader rounded-pill px-1.5 py-0 ms-1 small d-none d-xl-inline" style="font-size: 0.65rem;">E-Reader</span>
                         </a>
                     </li>
                     @auth
-                        @if(!auth()->user()->isAdmin())
-                            <li class="nav-item">
-                                <a class="nav-link px-2 px-xl-2.5 {{ request()->routeIs('borrowings.*') ? 'active' : '' }}" href="{{ route('borrowings.index') }}">
-                                    <i class="bi bi-clock-history me-1"></i> <span class="d-none d-xl-inline">Peminjaman Saya</span><span class="d-inline d-xl-none">Peminjaman</span>
-                                </a>
-                            </li>
-                        @endif
-
                         @if(auth()->user()->isAdmin())
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-primary fw-bold px-2 px-xl-2.5 {{ request()->is('admin*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown">
@@ -1149,11 +1162,6 @@
                                     <li>
                                         <a class="dropdown-item py-2" href="{{ route('admin.dashboard') }}">
                                              <i class="bi bi-speedometer2 text-primary me-2"></i> Dashboard
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item py-2" href="{{ route('admin.borrowings.index') }}">
-                                            <i class="bi bi-arrow-left-right text-warning me-2"></i> Kelola Peminjaman
                                         </a>
                                     </li>
                                     <li>
@@ -1179,7 +1187,7 @@
 
                 <div class="d-flex align-items-center gap-2 flex-nowrap ms-auto flex-shrink-0">
                     <!-- Hitam / Putih Theme Switcher Button -->
-                    <button type="button" class="btn btn-sm rounded-circle theme-toggle-btn d-inline-flex align-items-center justify-content-center border shadow-sm flex-shrink-0" id="themeToggleBtn" onclick="toggleTheme()" title="Ganti Mode Hitam / Putih (Dark & Light)" style="width: 34px; height: 34px; min-width: 34px; padding: 0;">
+                    <button type="button" class="btn btn-sm rounded-circle theme-toggle-btn border shadow-sm flex-shrink-0" id="themeToggleBtn" onclick="toggleTheme()" title="Ganti Mode Hitam / Putih (Dark & Light)">
                         <i class="bi bi-moon-stars-fill text-warning fs-6" id="themeIcon"></i>
                     </button>
                     @guest
@@ -1191,56 +1199,70 @@
                         </a>
                     @else
                         <div class="dropdown flex-shrink-0">
-                            <button class="btn btn-light rounded-pill border dropdown-toggle d-flex align-items-center gap-1.5 px-2.5 py-1 text-nowrap shadow-sm" type="button" data-bs-toggle="dropdown">
-                                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0" style="width: 28px; height: 28px; min-width: 28px; font-weight: 700; font-size: 0.8rem;">
+                            <button class="nav-user-btn text-nowrap" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="user-avatar">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </div>
-                                <div class="text-start d-none d-sm-block text-nowrap pe-1" style="max-width: 130px;">
-                                    <div class="fw-bold small lh-1 text-truncate" title="{{ auth()->user()->name }}">{{ preg_replace('/\s*\([^)]*\)/', '', auth()->user()->name) }}</div>
-                                    <small class="text-muted d-block mt-1 text-truncate" style="font-size: 0.68rem; line-height: 1;">
+                                <div class="user-info d-none d-sm-flex">
+                                    <span class="user-name" title="{{ auth()->user()->name }}">
+                                        {{ preg_replace('/\s*\([^)]*\)/', '', auth()->user()->name) }}
+                                    </span>
+                                    <span class="user-role">
                                         @if(auth()->user()->isAdminBesar())
-                                            <span class="text-danger fw-bold"><i class="bi bi-shield-fill-check"></i> Admin</span>
+                                            <span class="text-danger fw-semibold"><i class="bi bi-shield-fill-check"></i> Admin</span>
                                         @elseif(auth()->user()->isAdmin())
-                                            Petugas
+                                            <span class="text-primary fw-semibold"><i class="bi bi-person-badge"></i> Petugas</span>
                                         @else
-                                            Siswa
+                                            <span class="text-muted"><i class="bi bi-mortarboard"></i> Siswa</span>
                                         @endif
-                                    </small>
+                                    </span>
                                 </div>
+                                <i class="bi bi-chevron-down user-chevron"></i>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm rounded-3 mt-2" style="min-width: 220px;">
-                                <li class="px-3 py-2 border-bottom">
-                                    <div class="fw-bold">{{ auth()->user()->name }}</div>
-                                    <div class="text-muted small">{{ auth()->user()->email }}</div>
+                            <ul class="dropdown-menu dropdown-menu-end border-0 shadow rounded-3 mt-2 py-2" style="min-width: 230px;">
+                                <li class="px-3 py-2.5 border-bottom mb-1">
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <div class="user-avatar" style="width: 36px; height: 36px; min-width: 36px; font-size: 0.95rem;">
+                                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                        </div>
+                                        <div class="text-truncate">
+                                            <div class="fw-bold text-truncate" style="font-size: 0.88rem; color: var(--text-main);">{{ auth()->user()->name }}</div>
+                                            <div class="text-muted small text-truncate" style="font-size: 0.75rem;">{{ auth()->user()->email }}</div>
+                                        </div>
+                                    </div>
                                     @if(auth()->user()->isAdminBesar())
-                                        <span class="badge bg-danger shadow-sm mt-1">
-                                            <i class="bi bi-shield-shaded me-1"></i> Admin Besar (Utama)
+                                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1 rounded-pill" style="font-size: 0.68rem; font-weight: 600;">
+                                            <i class="bi bi-shield-shaded me-1"></i> Admin Utama
                                         </span>
                                     @elseif(auth()->user()->isAdmin())
-                                        <span class="badge bg-danger mt-1">Petugas Perpustakaan</span>
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2 py-1 rounded-pill" style="font-size: 0.68rem; font-weight: 600;">
+                                            <i class="bi bi-person-badge me-1"></i> Petugas Perpustakaan
+                                        </span>
                                     @else
-                                        <span class="badge bg-primary mt-1">Siswa SMA</span>
+                                        <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2 py-1 rounded-pill" style="font-size: 0.68rem; font-weight: 600;">
+                                            <i class="bi bi-mortarboard me-1"></i> Siswa / Pelajar
+                                        </span>
                                     @endif
                                 </li>
                                 @if(auth()->user()->isAdmin())
                                     <li>
-                                        <a class="dropdown-item py-2" href="{{ route('admin.dashboard') }}">
-                                            <i class="bi bi-speedometer2 me-2 text-primary"></i> Dashboard Admin
+                                        <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2 mx-1" href="{{ route('admin.dashboard') }}">
+                                            <i class="bi bi-speedometer2 text-primary"></i> Dashboard Admin
                                         </a>
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item py-2" href="{{ route('borrowings.index') }}">
-                                            <i class="bi bi-book me-2 text-primary"></i> Peminjaman Saya
+                                        <a class="dropdown-item py-2 d-flex align-items-center gap-2 rounded-2 mx-1" href="{{ route('catalog.index', ['baca_online' => 1]) }}">
+                                            <i class="bi bi-book-half text-success"></i> Baca Buku Online
                                         </a>
                                     </li>
                                 @endif
-                                <li><hr class="dropdown-divider"></li>
+                                <li><hr class="dropdown-divider my-1"></li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="dropdown-item text-danger py-2">
-                                            <i class="bi bi-box-arrow-right me-2"></i> Keluar (Logout)
+                                        <button type="submit" class="dropdown-item py-2 d-flex align-items-center gap-2 text-danger rounded-2 mx-1">
+                                            <i class="bi bi-box-arrow-right"></i> Keluar (Logout)
                                         </button>
                                     </form>
                                 </li>
@@ -1260,6 +1282,22 @@
                 <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 d-flex align-items-center gap-2 mb-4" role="alert">
                     <i class="bi bi-check-circle-fill fs-5 text-success"></i>
                     <div>{{ session('success') }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if(session('info'))
+                <div class="alert alert-info alert-dismissible fade show border-0 shadow-sm rounded-3 d-flex align-items-center gap-2 mb-4" role="alert">
+                    <i class="bi bi-info-circle-fill fs-5 text-info"></i>
+                    <div>{{ session('info') }}</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            @endif
+
+            @if(session('warning'))
+                <div class="alert alert-warning alert-dismissible fade show border-0 shadow-sm rounded-3 d-flex align-items-center gap-2 mb-4" role="alert">
+                    <i class="bi bi-exclamation-circle-fill fs-5 text-warning"></i>
+                    <div>{{ session('warning') }}</div>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             @endif
@@ -1293,10 +1331,10 @@
         <div class="container-fluid px-3 px-md-4 px-xl-5" style="max-width: 1440px;">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
                 <div>
-                    <strong>PustakaSekolah</strong> &copy; {{ date('Y') }} - Perpustakaan Digital SMA & SMK: Layanan Peminjaman Buku Pelajaran Kelas 10-12.
+                    <strong>PustakaSekolah</strong> &copy; {{ date('Y') }} - Perpustakaan Online SMP, SMA & SMK: Pustaka Digital & Akses Baca E-Reader Siswa.
                 </div>
                 <div class="d-flex gap-3">
-                    <a href="{{ route('catalog.index') }}" class="text-decoration-none text-muted">Katalog</a>
+                    <a href="{{ route('catalog.index') }}" class="text-decoration-none text-muted">Koleksi Buku</a>
                     @guest
                         <a href="{{ route('login') }}" class="text-decoration-none text-muted">Login</a>
                         <a href="{{ route('register') }}" class="text-decoration-none text-muted">Register</a>
@@ -1376,82 +1414,7 @@
             const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'light';
             updateThemeButtonUI(currentTheme);
 
-            // 2. JAM DIGITAL REALTIME & SAPAAN WAKTU DINAMIS
-            function updateClockAndGreeting() {
-                const now = new Date();
-                const hours = now.getHours();
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-
-                // Hari & Tanggal Indonesia
-                const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                const dayName = days[now.getDay()];
-                const dateStr = now.getDate() + ' ' + months[now.getMonth()] + ' ' + now.getFullYear();
-
-                const clockElem = document.getElementById('liveClockText');
-                if (clockElem) {
-                    clockElem.textContent = `${dayName}, ${dateStr} • ${hours}:${minutes}:${seconds} WIB`;
-                }
-
-                // Sapaan Ramah Siswa
-                const greetingIcon = document.getElementById('liveGreetingIcon');
-                const greetingText = document.getElementById('liveGreetingText');
-                if (greetingText && greetingIcon) {
-                    if (hours >= 4 && hours < 11) {
-                        greetingIcon.textContent = '🌅';
-                        greetingText.textContent = 'Selamat Pagi, Semangat Belajar!';
-                    } else if (hours >= 11 && hours < 15) {
-                        greetingIcon.textContent = '☀️';
-                        greetingText.textContent = 'Selamat Siang, Waktunya Literasi!';
-                    } else if (hours >= 15 && hours < 18) {
-                        greetingIcon.textContent = '🌇';
-                        greetingText.textContent = 'Selamat Sore, Santai Sambil Membaca!';
-                    } else {
-                        greetingIcon.textContent = '🌙';
-                        greetingText.textContent = 'Selamat Malam, Selamat Membaca!';
-                    }
-                }
-            }
-            updateClockAndGreeting();
-            setInterval(updateClockAndGreeting, 1000);
-
-            // 3. KUTIPAN LITERASI INSPIRATIF YANG BERGANTI-GANTI (TICKER)
-            const quotes = [
-                '"Buku adalah jembatan ilmu yang menghubungkan impian dengan masa depan."',
-                '"Jadikan setiap tempat sebagai sekolah, jadikan setiap orang sebagai guru." — Ki Hajar Dewantara',
-                '"Belajar tanpa berpikir itu sia-sia, berpikir tanpa belajar itu sangat berbahaya." — B.J. Habibie',
-                '"Cuma perlu satu buku untuk jatuh cinta pada membaca. Mari temukan buku itu." — Najwa Shihab',
-                '"Aku rela dipenjara asalkan bersama buku, karena dengan buku aku bebas." — Mohammad Hatta',
-                '"Orang boleh pandai setinggi langit, tapi selama ia tidak menulis, ia akan hilang di masyarakat." — Pramoedya Ananta Toer',
-                '"Membaca meluaskan cakrawala, membuka jendela dunia langsung di genggaman Anda."'
-            ];
-            let currentQuoteIdx = 0;
-            const quoteElem = document.getElementById('quoteTickerText');
-            if (quoteElem) {
-                setInterval(() => {
-                    quoteElem.style.opacity = '0';
-                    quoteElem.style.transition = 'opacity 0.4s ease';
-                    setTimeout(() => {
-                        currentQuoteIdx = (currentQuoteIdx + 1) % quotes.length;
-                        quoteElem.textContent = quotes[currentQuoteIdx];
-                        quoteElem.style.opacity = '1';
-                    }, 400);
-                }, 6000);
-            }
-
-            // 4. SIMULASI PEMBACA AKTIF REAL-TIME (MEMBUAT WEB LEBIH HIDUP)
-            let readersCount = 22;
-            const readersElem = document.getElementById('liveReadersNum');
-            if (readersElem) {
-                setInterval(() => {
-                    const delta = Math.floor(Math.random() * 3) - 1; // -1, 0, or +1
-                    readersCount = Math.max(16, Math.min(32, readersCount + delta));
-                    readersElem.textContent = readersCount;
-                }, 10000);
-            }
-
-            // 5. TOMBOL FLOATING "KEMBALI KE ATAS"
+            // Tombol Floating "Kembali ke Atas"
             const backToTopBtn = document.getElementById('backToTopBtn');
             if (backToTopBtn) {
                 window.addEventListener('scroll', function() {

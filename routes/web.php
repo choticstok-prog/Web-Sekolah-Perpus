@@ -11,13 +11,16 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// Welcome / Landing Page
-Route::get('/', [HomeController::class, 'index'])->name('home');
+// Welcome / Landing Page (Awalan Buka Web)
+Route::view('/', 'landing')->name('landing');
+Route::get('/beranda', [HomeController::class, 'index'])->name('home');
 
 // Catalog (Accessible to both guests and authenticated users)
 Route::get('/katalog', [CatalogController::class, 'index'])->name('catalog.index');
+Route::get('/katalog/tts-stream', [CatalogController::class, 'ttsStream'])->name('catalog.ttsStream');
 Route::get('/katalog/{book}', [CatalogController::class, 'show'])->name('catalog.show');
 Route::get('/katalog/{book}/baca', [CatalogController::class, 'read'])->name('catalog.read');
+Route::get('/katalog/{book}/pdf', [CatalogController::class, 'pdf'])->name('catalog.pdf');
 
 // Authentication Routes (Guest only)
 Route::middleware('guest')->group(function (): void {
@@ -41,6 +44,7 @@ Route::middleware('auth')->group(function (): void {
         Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 
         // Books Management
+        Route::get('/buku/ekspor', [AdminBookController::class, 'export'])->name('books.export');
         Route::get('/buku', [AdminBookController::class, 'index'])->name('books.index');
         Route::get('/buku/tambah', [AdminBookController::class, 'create'])->name('books.create');
         Route::post('/buku', [AdminBookController::class, 'store'])->name('books.store');

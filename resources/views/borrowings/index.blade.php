@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Riwayat Peminjaman Buku Siswa - PustakaSekolah')
+@section('title', 'Buku & Riwayat Peminjaman - Perpustakaan Online PustakaSekolah')
 
 @section('content')
 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
     <div>
-        <h3 class="fw-bold mb-1">Riwayat Peminjaman Buku Saya</h3>
-        <p class="text-muted small mb-0">Pantau buku paket atau modul sejarah yang sedang dipinjam, status persetujuan petugas, dan batas pengembalian.</p>
+        <h3 class="fw-bold mb-1">Buku & Peminjaman Saya</h3>
+        <p class="text-muted small mb-0">Akses baca online koleksi buku Anda atau pantau status aktivitas buku di perpustakaan sekolah.</p>
     </div>
     <a href="{{ route('catalog.index') }}" class="btn btn-primary rounded-pill">
-        <i class="bi bi-plus-circle me-1"></i> Pinjam Buku Lain
+        <i class="bi bi-grid-fill me-1"></i> Jelajahi Koleksi Buku
     </a>
 </div>
 
@@ -206,23 +206,30 @@
                                 @endif
                             </td>
                             <td class="text-end pe-4">
-                                @if($b->status == 'menunggu')
-                                    <form action="{{ route('borrowings.cancel', $b) }}" method="POST" onsubmit="return confirm('Batalkan permohonan peminjaman buku ini?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
-                                            <i class="bi bi-trash"></i> Batalkan
-                                        </button>
-                                    </form>
-                                @elseif($b->status == 'dipinjam')
-                                    <span class="text-muted small">
-                                        <i class="bi bi-info-circle me-1"></i> Kembalikan ke petugas
-                                    </span>
-                                @else
-                                    <a href="{{ route('catalog.show', $b->book) }}" class="btn btn-sm btn-light border rounded-pill">
-                                        Pinjam Lagi
-                                    </a>
-                                @endif
+                                <div class="d-flex justify-content-end align-items-center gap-2">
+                                    @if($b->book->pdf_url)
+                                        <a href="{{ route('catalog.read', $b->book) }}" class="btn btn-sm btn-primary rounded-pill px-2.5 py-1 shadow-sm d-inline-flex align-items-center gap-1" title="Baca Online di E-Reader">
+                                            <i class="bi bi-book-half"></i> <span class="d-none d-md-inline">Baca Online</span>
+                                        </a>
+                                    @endif
+                                    @if($b->status == 'menunggu')
+                                        <form action="{{ route('borrowings.cancel', $b) }}" method="POST" onsubmit="return confirm('Batalkan permohonan peminjaman buku ini?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                                <i class="bi bi-trash"></i> Batalkan
+                                            </button>
+                                        </form>
+                                    @elseif($b->status == 'dipinjam')
+                                        <span class="text-muted small">
+                                            <i class="bi bi-info-circle me-1"></i> Fisik di siswa
+                                        </span>
+                                    @else
+                                        <a href="{{ route('catalog.show', $b->book) }}" class="btn btn-sm btn-light border rounded-pill">
+                                            Detail
+                                        </a>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -236,18 +243,18 @@
     </div>
 @else
     <div class="card border-0 shadow-sm p-5 text-center my-4">
-        <i class="bi bi-inbox text-muted mb-3" style="font-size: 3.5rem;"></i>
-        <h5 class="fw-bold">Belum Ada Riwayat Peminjaman</h5>
+        <i class="bi bi-journal-bookmark text-muted mb-3" style="font-size: 3.5rem;"></i>
+        <h5 class="fw-bold">Belum Ada Riwayat Peminjaman Buku</h5>
         <p class="text-muted small mb-3">
             @if(request('status'))
-                Tidak ada peminjaman dengan status "{{ request('status') }}".
+                Tidak ada data dengan status "{{ request('status') }}".
             @else
-                Anda belum pernah meminjam buku. Temukan buku yang ingin dibaca di katalog kami!
+                Belum ada riwayat aktivitas buku. Anda dapat langsung membuka dan membaca seluruh koleksi buku di perpustakaan online kapan saja!
             @endif
         </p>
         <div>
             <a href="{{ route('catalog.index') }}" class="btn btn-primary rounded-pill px-4">
-                <i class="bi bi-search me-1"></i> Jelajahi Katalog Buku
+                <i class="bi bi-book-half me-1"></i> Buka Koleksi Perpustakaan Online
             </a>
         </div>
     </div>

@@ -1,56 +1,55 @@
 <?php
 
+/*
+ * HINT: Fitur Dashboard Admin (URL: /admin)
+ * Fungsi: Mengambil ringkasan statistik, 8 buku terbaru, dan 5 siswa terbaru
+ *         dari database, lalu mengirimkannya ke tampilan admin/dashboard.blade.php.
+ */
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
-use App\Models\Borrowing;
 use App\Models\Category;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
     /**
-     * Display the admin dashboard.
+     * Display the admin dashboard for the online library.
      */
     public function index(): View
     {
-        $today = Carbon::now()->startOfDay()->format('Y-m-d');
-
+        // 1. Hitung ringkasan angka statistik untuk kartu di atas dashboard
         $stats = [
             'total_books' => Book::count(),
+            'total_online' => Book::whereNotNull('pdf_url')->count(),
             'total_categories' => Category::count(),
             'total_members' => User::where('role', 'peminjam')->count(),
-            'active_borrowings' => Borrowing::where('status', 'dipinjam')->count(),
-            'pending_borrowings' => Borrowing::where('status', 'menunggu')->count(),
-            'returned_borrowings' => Borrowing::where('status', 'dikembalikan')->count(),
-            'overdue_borrowings' => Borrowing::where('status', 'dipinjam')
-                ->where('due_date', '<', $today)
-                ->count(),
-            'total_fines' => Borrowing::sum('fine_amount'),
+            'sma_books' => Book::where('title', 'like', '%SMA%')->count(),
+            'smp_books' => Book::where('title', 'like', '%SMP%')->count(),
+            'novel_books' => Book::whereHas('category', function ($q): void {
+                $q->where('slug', 'novel-fiksi');
+            })->count(),
         ];
 
-        $recentBorrowings = Borrowing::with(['user', 'book'])
+        // 2. Ambil 8 buku terbaru sekaligus data kategorinya
+        $recentBooks = Book::with('category')
             ->latest()
-            ->take(5)
+            ->take(8)
             ->get();
 
-        $lowStockBooks = Book::with('category')
-            ->where('available_stock', '<=', 1)
-            ->take(5)
-            ->get();
-
+        // 3. Ambil 5 siswa/anggota yang paling baru mendaftar
         $recentMembers = User::where('role', 'peminjam')
             ->latest()
             ->take(5)
             ->get();
 
+        // 4. Kirim semua data di atas ke file tampilan admin/dashboard.blade.php
         return view('admin.dashboard', [
             'stats' => $stats,
-            'recentBorrowings' => $recentBorrowings,
-            'lowStockBooks' => $lowStockBooks,
+            'recentBooks' => $recentBooks,
             'recentMembers' => $recentMembers,
         ]);
     }

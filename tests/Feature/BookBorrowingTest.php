@@ -7,6 +7,7 @@ use App\Models\Borrowing;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class BookBorrowingTest extends TestCase
@@ -245,7 +246,7 @@ class BookBorrowingTest extends TestCase
         $response->assertDontSee('Matematika Kelas 12 SMA');
     }
 
-    public function test_reader_interface_loads_successfully_for_online_books(): void
+    public function test_reader_interface_redirects_guest_to_register_page(): void
     {
         $book = Book::factory()->create([
             'title' => 'Sejarah Indonesia Kelas X',
@@ -255,10 +256,86 @@ class BookBorrowingTest extends TestCase
 
         $response = $this->get(route('catalog.read', $book));
 
+        $response->assertRedirect(route('register'));
+        $response->assertSessionHas('info');
+    }
+
+    public function test_reader_interface_loads_successfully_for_authenticated_users(): void
+    {
+        $user = User::factory()->create(['role' => 'peminjam']);
+        $book = Book::factory()->create([
+            'title' => 'Sejarah Indonesia Kelas X',
+            'pdf_url' => 'https://static-sc.cloudapp.web.id/content/pdf/bukuteks/sejarah_x.pdf',
+            'source_url' => 'https://buku.kemendikdasmen.go.id/katalog/sejarah-x',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('catalog.read', $book));
+
         $response->assertStatus(200);
         $response->assertSee('Baca Online: Sejarah Indonesia Kelas X');
         $response->assertSee('Google Docs Viewer');
         $response->assertSee('Catatan Siswa');
+    }
+
+    public function test_book_pdf_endpoint_streams_valid_pdf_file(): void
+    {
+        $book = Book::factory()->create([
+            'title' => 'Laskar Pelangi',
+            'author' => 'Andrea Hirata',
+            'description' => 'Sinopsis Laskar Pelangi.',
+        ]);
+
+        $response = $this->get(route('catalog.pdf', $book));
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'application/pdf');
+    }
+
+    public function test_book_pdf_endpoint_streams_valid_pdf_file_for_authenticated_users(): void
+    {
+        $user = User::factory()->create(['role' => 'peminjam']);
+        $book = Book::factory()->create([
+            'title' => 'Laskar Pelangi',
+            'author' => 'Andrea Hirata',
+            'description' => 'Sinopsis Laskar Pelangi.',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('catalog.pdf', $book));
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'application/pdf');
+    }
+
+    public function test_tts_stream_endpoint_validates_and_streams_audio(): void
+    {
+        $emptyResponse = $this->get(route('catalog.ttsStream'));
+        $emptyResponse->assertStatus(400);
+
+        Http::fake([
+            'translate.google.com/*' => Http::response(str_repeat('MP3_AUDIO_BYTES', 20), 200, [
+                'Content-Type' => 'audio/mpeg',
+            ]),
+        ]);
+
+        $streamResponse = $this->get(route('catalog.ttsStream', ['text' => 'Halo selamat datang di perpustakaan']));
+        $streamResponse->assertStatus(200);
+        $streamResponse->assertHeader('Content-Type', 'audio/mpeg');
+    }
+
+    public function test_reader_interface_contains_500_percent_volume_booster_controls(): void
+    {
+        $user = User::factory()->create(['role' => 'peminjam']);
+        $book = Book::factory()->create([
+            'title' => 'Sejarah Indonesia',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('catalog.read', $book));
+
+        $response->assertStatus(200);
+        $response->assertSee('ttsVolumeSlider');
+        $response->assertSee('500% (Maksimal Booster)');
+        $response->assertSee('ttsVoiceModelSelect');
+        $response->assertSee('Cewek Lembut');
     }
 
     public function test_database_seeder_produces_unique_covers_and_valid_source_urls(): void

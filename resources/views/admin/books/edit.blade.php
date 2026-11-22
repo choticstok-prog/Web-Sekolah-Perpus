@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h3 class="fw-bold mb-1"><i class="bi bi-pencil-square text-warning me-2"></i>Edit Data Buku</h3>
-                <p class="text-muted small mb-0">Perbarui data buku, kategori, atau jumlah stok eksemplar.</p>
+                <p class="text-muted small mb-0">Perbarui data buku, kategori, file PDF e-reader, atau informasi katalog.</p>
             </div>
             <a href="{{ route('admin.books.index') }}" class="btn btn-outline-secondary rounded-pill">
                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar
@@ -102,7 +102,7 @@
                     </div>
 
                     <!-- ISBN -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label for="isbn" class="form-label small fw-semibold">ISBN</label>
                         <input type="text" class="form-control @error('isbn') is-invalid @enderror" 
                                id="isbn" name="isbn" value="{{ old('isbn', $book->isbn) }}">
@@ -111,16 +111,8 @@
                         @enderror
                     </div>
 
-                    <!-- Stok Buku -->
-                    <div class="col-md-6">
-                        <label for="stock" class="form-label small fw-semibold">Jumlah Total Stok <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control @error('stock') is-invalid @enderror" 
-                               id="stock" name="stock" value="{{ old('stock', $book->stock) }}" min="1" required>
-                        <div class="form-text small">Stok saat ini tersedia: {{ $book->available_stock }} eks.</div>
-                        @error('stock')
-                            <div class="text-danger small mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <!-- Hidden stock for digital collection -->
+                    <input type="hidden" name="stock" value="{{ old('stock', $book->stock ?? 99) }}">
 
                     <!-- Gambar Sampul / Cover -->
                     <div class="col-md-6">

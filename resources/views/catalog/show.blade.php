@@ -1,41 +1,53 @@
 @extends('layouts.app')
 
-@section('title', $book->title . ' - Perpustakaan Sekolah SMA')
+@section('title', $book->title . ' - Perpustakaan Online PustakaSekolah')
 
 @section('content')
 <!-- Breadcrumbs -->
 <nav aria-label="breadcrumb" class="mb-4">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('catalog.index') }}" class="text-decoration-none">Katalog Perpustakaan</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('catalog.index') }}" class="text-decoration-none">Perpustakaan Online</a></li>
         <li class="breadcrumb-item"><a href="{{ route('catalog.index', ['kategori' => $book->category->slug]) }}" class="text-decoration-none">{{ $book->category->name }}</a></li>
         <li class="breadcrumb-item active text-truncate" style="max-width: 300px;">{{ $book->title }}</li>
     </ol>
 </nav>
 
 @if($book->pdf_url)
-    <!-- Call-To-Action Banner: Fitur Baca Online -->
-    <div class="card border-0 mb-4 text-white p-3 p-md-4 shadow-sm animate-fade-in-up" 
-         style="background: linear-gradient(135deg, #065f46 0%, #059669 50%, #10b981 100%); border-radius: 16px;">
+    <!-- Call-To-Action Banner: Fitur Baca Online (Tenang, Elegan & Serasi) -->
+    <div class="card border-0 mb-4 text-white p-3 p-md-4 shadow-sm" 
+         style="background: #0f172a; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.08);">
         <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
             <div class="d-flex align-items-center gap-3">
-                <div class="p-3 bg-white bg-opacity-20 rounded-circle text-white d-flex align-items-center justify-content-center shadow-sm" style="width: 58px; height: 58px; min-width: 58px;">
+                <div class="p-3 rounded-circle text-primary d-flex align-items-center justify-content-center shadow-sm" 
+                     style="width: 54px; height: 54px; min-width: 54px; background: rgba(59, 130, 246, 0.15);">
                     <i class="bi bi-book-half fs-2"></i>
                 </div>
                 <div>
-                    <span class="badge bg-white text-success fw-bold px-3 py-1 rounded-pill mb-1 shadow-sm">
-                        <span class="live-dot me-1"></span> Fitur Baca Online (E-Reader) Tersedia
-                    </span>
-                    <span class="badge bg-warning text-dark fw-bold px-2 py-1 rounded-pill mb-1 shadow-sm">
-                        <i class="bi bi-cpu me-1"></i> Ramah Device Kentang
-                    </span>
-                    <h5 class="fw-bold mb-1 text-white">Baca Buku Teks Ini Online Sekarang (Gratis & Full PDF)</h5>
-                    <p class="mb-0 text-white-50 small">Dokumen resmi terverifikasi Kemdikbudristek. Dilengkapi <strong>Mode Teks Ringan (0 MB & 0 Lag)</strong> untuk HP spek kentang, serta opsi pembaca PDF lengkap.</p>
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                        <span class="badge px-3 py-1 rounded-pill fw-semibold" 
+                              style="background-color: rgba(59, 130, 246, 0.18); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.35); font-size: 0.78rem;">
+                            <i class="bi bi-book-half me-1"></i> E-Reader Tersedia
+                        </span>
+                        <span class="badge px-2.5 py-1 rounded-pill fw-medium" 
+                              style="background-color: rgba(255, 255, 255, 0.08); color: #cbd5e1; border: 1px solid rgba(255, 255, 255, 0.15); font-size: 0.78rem;">
+                            <i class="bi bi-check2-circle me-1 text-primary"></i> Akses Digital Gratis
+                        </span>
+                    </div>
+                    <h5 class="fw-bold mb-1 text-white">Baca Buku Ini di Perpustakaan Online</h5>
+                    <p class="mb-0 small" style="color: #94a3b8;">Tersedia langsung di peramban. Lengkap dengan pembaca kanvas ringan dan naskah cerita/bab tanpa antrean.</p>
                 </div>
             </div>
-            <a href="{{ route('catalog.read', $book) }}" class="btn btn-light text-success fw-bold px-4 py-2 rounded-pill shadow d-inline-flex align-items-center justify-content-center gap-2 text-nowrap">
-                <i class="bi bi-eye-fill"></i>
-                <span>Buka E-Reader Sekarang</span>
-            </a>
+            @auth
+                <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center justify-content-center gap-2 text-nowrap">
+                    <i class="bi bi-eye-fill"></i>
+                    <span>Buka E-Reader Sekarang</span>
+                </a>
+            @else
+                <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary fw-semibold px-4 py-2 rounded-pill shadow-sm d-inline-flex align-items-center justify-content-center gap-2 text-nowrap">
+                    <i class="bi bi-person-plus-fill"></i>
+                    <span>Daftar untuk Buka E-Reader</span>
+                </a>
+            @endauth
         </div>
     </div>
 @endif
@@ -44,7 +56,7 @@
     <!-- Left Column: Book Cover -->
     <div class="col-md-4 col-lg-3">
         <div class="card border-0 shadow-sm overflow-hidden p-2 text-center sticky-top" style="top: 90px;">
-            <div style="height: 340px; background-color: #f1f5f9; border-radius: 10px; overflow: hidden;" class="position-relative">
+            <div style="height: 340px; background-color: #0f172a; border-radius: 12px; overflow: hidden;" class="position-relative">
                 @if($book->cover_image)
                     <img src="{{ $book->cover_image }}" class="w-100 h-100 object-fit-cover" alt="{{ $book->title }}">
                 @else
@@ -55,30 +67,32 @@
                 @endif
 
                 @if($book->pdf_url)
-                    <span class="position-absolute bottom-0 start-0 m-2 badge bg-success bg-opacity-95 text-white rounded-pill px-2 py-1 small shadow-sm d-flex align-items-center gap-1">
-                        <span class="live-dot" style="width: 6px; height: 6px; background-color: #ffffff;"></span> E-Reader Aktif
+                    <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark bg-opacity-75 text-white border border-light border-opacity-25 rounded-pill px-2.5 py-1 small shadow-sm d-flex align-items-center gap-1.5">
+                        <i class="bi bi-book-half text-primary"></i> E-Reader Siap
                     </span>
                 @endif
             </div>
 
             <div class="mt-3 text-center">
                 @if($book->pdf_url)
-                    <a href="{{ route('catalog.read', $book) }}" class="btn btn-reader w-100 rounded-pill py-2 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-2">
-                        <i class="bi bi-book-half"></i>
-                        <span>Baca Buku Ini Online</span>
-                    </a>
+                    @auth
+                        <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary w-100 rounded-pill py-2.5 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-2 fw-semibold">
+                            <i class="bi bi-book-half"></i>
+                            <span>Baca Buku Ini Online</span>
+                        </a>
+                    @else
+                        <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary w-100 rounded-pill py-2.5 mb-2 shadow-sm d-flex align-items-center justify-content-center gap-2 fw-semibold">
+                            <i class="bi bi-person-plus-fill"></i>
+                            <span>Daftar untuk Baca Online</span>
+                        </a>
+                        <small class="text-primary d-block mt-1 mb-2 fw-semibold" style="font-size: 0.8rem;">
+                            <i class="bi bi-info-circle me-1"></i>Daftar gratis untuk akses E-Reader
+                        </small>
+                    @endauth
                 @endif
-
-                @if($book->isAvailable())
-                    <div class="badge bg-success-subtle text-success fs-6 py-2 px-3 rounded-pill w-100 mb-2">
-                        <i class="bi bi-check-circle-fill me-1"></i> Tersedia ({{ $book->available_stock }} dari {{ $book->stock }})
-                    </div>
-                @else
-                    <div class="badge bg-danger-subtle text-danger fs-6 py-2 px-3 rounded-pill w-100 mb-2">
-                        <i class="bi bi-x-circle-fill me-1"></i> Stok Sedang Habis (0/{{ $book->stock }})
-                    </div>
-                @endif
-                <small class="text-muted">Total Stok Fisik: {{ $book->stock }} Eksemplar</small>
+                <small class="text-muted d-block mt-2">
+                    <i class="bi bi-check-circle text-primary me-1"></i>Akses digital gratis & mandiri
+                </small>
             </div>
         </div>
     </div>
@@ -123,8 +137,8 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="text-muted small">Status Ketersediaan</div>
-                    <div class="fw-semibold {{ $book->isAvailable() ? 'text-success' : 'text-danger' }}">
-                        {{ $book->isAvailable() ? 'Siap Dipinjam Siswa' : 'Tidak Tersedia' }}
+                    <div class="fw-semibold text-primary">
+                        <i class="bi bi-check-circle-fill me-1"></i> Akses Online 100% Aktif
                     </div>
                 </div>
             </div>
@@ -141,7 +155,7 @@
                 </div>
 
                 @if($book->source_url)
-                    <div class="mt-3 p-3 bg-primary-subtle rounded-3 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 border border-primary-subtle">
+                    <div class="mt-3 p-3 bg-light rounded-3 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2 border">
                         <div class="small text-dark d-flex align-items-center gap-2">
                             <i class="bi bi-patch-check-fill text-primary fs-4"></i>
                             <div>
@@ -149,7 +163,7 @@
                                 <div class="text-muted" style="font-size: 0.78rem;">Portal resmi Sistem Informasi Perbukuan Indonesia (Buku Teks Terverifikasi)</div>
                             </div>
                         </div>
-                        <a href="{{ $book->source_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary rounded-pill px-3 py-2 fw-semibold d-inline-flex align-items-center justify-content-center gap-1 text-nowrap shadow-sm">
+                        <a href="{{ $book->source_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center justify-content-center gap-1 text-nowrap shadow-sm">
                             <span>Buka Buku di SIBI</span> <i class="bi bi-box-arrow-up-right small ms-1"></i>
                         </a>
                     </div>
@@ -158,115 +172,77 @@
         </div>
     </div>
 
-    <!-- Right Column: Borrowing Form / Action Card -->
+    <!-- Right Column: Online Access & Admin Panel -->
     <div class="col-lg-4">
+        <!-- Card 1: Akses Baca Perpustakaan Online -->
         @if($book->pdf_url)
-            <div class="card border-0 shadow-sm p-3 mb-3 bg-success-subtle border-start border-4 border-success">
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                    <span class="badge bg-success text-white rounded-pill px-2 py-1 small">
-                        <span class="live-dot me-1" style="width: 6px; height: 6px; background-color: #ffffff;"></span> E-Reader Siap
+            <div class="card border-0 shadow-sm p-4 mb-4">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1.5 small fw-semibold">
+                        <i class="bi bi-book-half me-1"></i> E-Reader Aktif
                     </span>
-                    <span class="text-success fw-bold small">100% Gratis</span>
+                    <span class="badge bg-light text-muted border px-2.5 py-1 rounded-pill small">100% Gratis</span>
                 </div>
-                <h6 class="fw-bold text-dark mb-1">Baca Online Mandiri</h6>
-                <p class="text-secondary small mb-3" style="font-size: 0.78rem;">
-                    Buku ini dapat langsung dibaca secara utuh di peramban tanpa antri pinjam buku fisik.
+                <h5 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">
+                    <i class="bi bi-book-half text-primary"></i> Akses Baca Online
+                </h5>
+                <p class="text-secondary small mb-3" style="font-size: 0.85rem; line-height: 1.55;">
+                    Buku materi pelajaran dan karya sastra ini dapat langsung dibaca secara utuh di peramban tanpa antrean dan hemat memori.
                 </p>
-                <a href="{{ route('catalog.read', $book) }}" class="btn btn-sm btn-reader w-100 py-2 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2">
-                    <i class="bi bi-book-half"></i>
-                    <span>Mulai Baca Online Sekarang</span>
-                </a>
+
+                @auth
+                    <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary w-100 py-2.5 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2 fw-semibold fs-6 mb-3">
+                        <i class="bi bi-book-half"></i>
+                        <span>Mulai Baca Online Sekarang</span>
+                    </a>
+                @else
+                    <a href="{{ route('catalog.read', $book) }}" class="btn btn-primary w-100 py-2.5 rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2 fw-semibold fs-6 mb-3">
+                        <i class="bi bi-person-plus-fill"></i>
+                        <span>Daftar untuk Baca Online</span>
+                    </a>
+                @endauth
+
+                <div class="p-3 rounded-3 bg-light border small">
+                    <div class="fw-bold text-dark mb-2" style="font-size: 0.78rem; letter-spacing: 0.3px;">
+                        <i class="bi bi-check2-circle text-primary me-1"></i> KEUNGGULAN E-READER:
+                    </div>
+                    <ul class="list-unstyled mb-0 small text-secondary d-flex flex-column gap-1.5">
+                        <li class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2 text-primary" style="font-size: 0.95rem;"></i>
+                            <span>Mode kanvas hemat kuota & RAM</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2 text-primary" style="font-size: 0.95rem;"></i>
+                            <span>Catatan belajar mandiri tersimpan privat</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check2 text-primary" style="font-size: 0.95rem;"></i>
+                            <span>Akses 24 jam di semua jenis HP, tablet & PC</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         @endif
 
-        <div class="card border-0 shadow-sm p-4">
-            <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                <i class="bi bi-bookmark-plus text-primary"></i> Pinjam Buku Fisik
-            </h5>
-
-            @guest
-                <div class="alert alert-warning border-0 small rounded-3 mb-3">
-                    <i class="bi bi-info-circle me-1"></i> Anda harus memiliki akun anggota untuk dapat mengajukan peminjaman buku perpustakaan.
-                </div>
-                <a href="{{ route('login') }}" class="btn btn-primary w-100 py-2 mb-2">
-                    <i class="bi bi-box-arrow-in-right me-1"></i> Masuk Sekarang
-                </a>
-                <a href="{{ route('register') }}" class="btn btn-outline-secondary w-100 py-2">
-                    <i class="bi bi-person-plus me-1"></i> Daftar Anggota Baru
-                </a>
-            @else
-                @if(auth()->user()->isAdmin())
-                    <div class="alert alert-info border-0 small rounded-3 mb-3">
-                        <i class="bi bi-shield-lock me-1"></i> Anda login sebagai <strong>Administrator</strong>. Anda dapat mengedit buku ini atau melihat peminjamannya.
+        <!-- Card 2: Panel Administrator -->
+        @auth
+            @if(auth()->user()->isAdmin())
+                <div class="card border-0 shadow-sm p-4">
+                    <h5 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-check text-primary"></i> Kelola Data Buku
+                    </h5>
+                    <div class="alert alert-primary-subtle border-0 small rounded-3 mb-3">
+                        <i class="bi bi-person-badge text-primary me-1"></i> Anda login sebagai <strong>Administrator Perpustakaan Online</strong>.
                     </div>
-                    <a href="{{ route('admin.books.edit', $book) }}" class="btn btn-warning text-dark w-100 fw-bold py-2 mb-2">
+                    <a href="{{ route('admin.books.edit', $book) }}" class="btn btn-warning text-dark w-100 fw-bold py-2 mb-2 rounded-pill shadow-sm">
                         <i class="bi bi-pencil-square me-1"></i> Edit Data Buku Ini
                     </a>
-                    <a href="{{ route('admin.borrowings.index', ['search' => $book->title]) }}" class="btn btn-outline-primary w-100 py-2">
-                        <i class="bi bi-arrow-left-right me-1"></i> Riwayat Peminjaman Buku Ini
+                    <a href="{{ route('admin.books.index') }}" class="btn btn-outline-primary w-100 py-2 rounded-pill">
+                        <i class="bi bi-journal-bookmark me-1"></i> Kelola Semua Koleksi Buku
                     </a>
-                @else
-                    @if($book->isAvailable())
-                        <form action="{{ route('borrowings.store', $book) }}" method="POST">
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="borrow_date" class="form-label small fw-semibold">Tanggal Mulai Pinjam</label>
-                                <input type="date" class="form-control @error('borrow_date') is-invalid @enderror" 
-                                       id="borrow_date" name="borrow_date" 
-                                       value="{{ old('borrow_date', date('Y-m-d')) }}" 
-                                       min="{{ date('Y-m-d') }}" required>
-                                @error('borrow_date')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="duration_days" class="form-label small fw-semibold">Durasi Peminjaman</label>
-                                <select class="form-select @error('duration_days') is-invalid @enderror" 
-                                        id="duration_days" name="duration_days" required onchange="updateDueDate()">
-                                    <option value="3" {{ old('duration_days') == '3' ? 'selected' : '' }}>3 Hari</option>
-                                    <option value="7" {{ old('duration_days', '7') == '7' ? 'selected' : '' }}>7 Hari (Standar)</option>
-                                    <option value="14" {{ old('duration_days') == '14' ? 'selected' : '' }}>14 Hari (2 Minggu)</option>
-                                </select>
-                                @error('duration_days')
-                                    <div class="text-danger small mt-1">{{ $message }}</div>
-                                @enderror
-                                <div class="form-text small mt-1 text-primary" id="dueDateInfo">
-                                    <i class="bi bi-calendar-event me-1"></i> Wajib kembali paling lambat: <span id="dueDateText">-</span>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="notes" class="form-label small fw-semibold">Catatan Tambahan (Opsional)</label>
-                                <textarea class="form-control" id="notes" name="notes" rows="2" 
-                                          placeholder="Tujuan pinjam atau pesan untuk pustakawan...">{{ old('notes') }}</textarea>
-                            </div>
-
-                            <div class="bg-light p-3 rounded-3 small mb-3">
-                                <div class="fw-semibold mb-1 text-dark"><i class="bi bi-shield-exclamation text-warning me-1"></i> Ketentuan Peminjaman Siswa:</div>
-                                <ul class="mb-0 ps-3 text-muted" style="font-size: 0.8rem;">
-                                    <li>Buku wajib dijaga dalam kondisi rapi, bersih, dan tidak dicoret.</li>
-                                    <li>Tunjukkan kode peminjaman kepada Petugas Perpustakaan Sekolah.</li>
-                                    <li>Keterlambatan pengembalian buku dikenakan denda Rp 1.000 / hari.</li>
-                                </ul>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">
-                                <i class="bi bi-check2-circle me-1"></i> Ajukan Peminjaman Sekarang
-                            </button>
-                        </form>
-                    @else
-                        <div class="alert alert-danger border-0 small rounded-3 mb-3">
-                            <i class="bi bi-exclamation-octagon-fill me-1"></i> Stok buku saat ini sedang habis dipinjam oleh anggota lain. Silakan periksa kembali nanti.
-                        </div>
-                        <a href="{{ route('catalog.index') }}" class="btn btn-outline-secondary w-100 py-2">
-                            <i class="bi bi-arrow-left me-1"></i> Cari Buku Lainnya
-                        </a>
-                    @endif
-                @endif
-            @endguest
-        </div>
+                </div>
+            @endif
+        @endauth
     </div>
 </div>
 
@@ -278,7 +254,7 @@
             @foreach($relatedBooks as $rel)
                 <div class="col">
                     <div class="card h-100 border-0 shadow-sm card-hover overflow-hidden">
-                        <div style="height: 150px; background-color: #e2e8f0;">
+                        <div style="height: 150px; background-color: #0f172a;">
                             @if($rel->cover_image)
                                 <img src="{{ $rel->cover_image }}" class="w-100 h-100 object-fit-cover" alt="{{ $rel->title }}">
                             @else
@@ -295,12 +271,12 @@
                             </h6>
                             <small class="text-muted mb-2">{{ $rel->author }}</small>
                             <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center gap-1">
-                                <span class="badge {{ $rel->isAvailable() ? 'bg-success-subtle text-success' : 'bg-secondary-subtle text-muted' }} rounded-pill" style="font-size: 0.7rem;">
-                                    {{ $rel->isAvailable() ? 'Stok: '.$rel->available_stock : 'Digital Only' }}
+                                <span class="badge bg-light text-muted border rounded-pill" style="font-size: 0.7rem;">
+                                    <i class="bi bi-book-half me-1"></i> E-Reader
                                 </span>
                                 <div class="d-flex gap-1">
                                     @if($rel->pdf_url)
-                                        <a href="{{ route('catalog.read', $rel) }}" class="btn btn-sm btn-success py-0 px-2 rounded-pill d-flex align-items-center gap-1" style="font-size: 0.75rem;" title="Baca Online">
+                                        <a href="{{ route('catalog.read', $rel) }}" class="btn btn-sm btn-primary py-0 px-2 rounded-pill d-flex align-items-center gap-1" style="font-size: 0.75rem;" title="Baca Online">
                                             <i class="bi bi-book-half"></i> Baca
                                         </a>
                                     @endif
@@ -316,35 +292,4 @@
         </div>
     </div>
 @endif
-@endsection
-
-@section('scripts')
-<script>
-    function updateDueDate() {
-        const borrowDateInput = document.getElementById('borrow_date');
-        const durationSelect = document.getElementById('duration_days');
-        const dueDateText = document.getElementById('dueDateText');
-
-        if (!borrowDateInput || !durationSelect || !dueDateText) return;
-
-        const borrowDateVal = borrowDateInput.value;
-        const duration = parseInt(durationSelect.value, 10);
-
-        if (borrowDateVal && !isNaN(duration)) {
-            const date = new Date(borrowDateVal);
-            date.setDate(date.getDate() + duration);
-            
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dueDateText.textContent = date.toLocaleDateString('id-ID', options);
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const borrowDateInput = document.getElementById('borrow_date');
-        if (borrowDateInput) {
-            borrowDateInput.addEventListener('change', updateDueDate);
-            updateDueDate();
-        }
-    });
-</script>
 @endsection

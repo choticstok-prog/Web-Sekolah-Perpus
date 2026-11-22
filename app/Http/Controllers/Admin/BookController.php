@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
+use App\Services\BookReportPdfService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
 
 class BookController extends Controller
@@ -18,6 +20,7 @@ class BookController extends Controller
     {
         $search = $request->query('search');
         $categoryId = $request->query('category_id');
+        $year = $request->query('year');
 
         $query = Book::with('category')->latest();
 
@@ -27,7 +30,8 @@ class BookController extends Controller
                     ->orWhere('author', 'like', "%{$search}%")
                     ->orWhere('publisher', 'like', "%{$search}%")
                     ->orWhere('city', 'like', "%{$search}%")
-                    ->orWhere('isbn', 'like', "%{$search}%");
+                    ->orWhere('isbn', 'like', "%{$search}%")
+                    ->orWhere('year', 'like', "%{$search}%");
             });
         }
 
@@ -35,14 +39,79 @@ class BookController extends Controller
             $query->where('category_id', $categoryId);
         }
 
+        if ($year) {
+            $query->where('year', $year);
+        }
+
         $books = $query->paginate(10)->withQueryString();
         $categories = Category::orderBy('name')->get();
+        $years = Book::select('year')->whereNotNull('year')->distinct()->orderBy('year', 'desc')->pluck('year');
 
         return view('admin.books.index', [
             'books' => $books,
             'categories' => $categories,
+            'years' => $years,
             'search' => $search,
             'categoryId' => $categoryId,
+            'year' => $year,
+        ]);
+    }
+
+    /**
+     * Export book data and summary statistics to executive PDF format.
+     */
+    public function export(Request $request, BookReportPdfService $reportService): Response
+    {
+        $search = $request->query('search');
+        $categoryId = $request->query('category_id');
+        $year = $request->query('year');
+
+        $query = Book::with('category')->latest();
+
+        if ($search) {
+            $query->where(function ($q) use ($search): void {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('author', 'like', "%{$search}%")
+                    ->orWhere('publisher', 'like', "%{$search}%")
+                    ->orWhere('city', 'like', "%{$search}%")
+                    ->orWhere('isbn', 'like', "%{$search}%")
+                    ->orWhere('year', 'like', "%{$search}%");
+            });
+        }
+
+        $selectedCategory = null;
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+            $selectedCategory = Category::find($categoryId);
+        }
+
+        if ($year) {
+            $query->where('year', $year);
+        }
+
+        $books = $query->get();
+
+        $summary = [
+            'total_books' => Book::count(),
+            'total_online' => Book::whereNotNull('pdf_url')->count(),
+            'total_categories' => Category::count(),
+        ];
+
+        $filters = [
+            'search' => $search,
+            'category_name' => $selectedCategory ? $selectedCategory->name : null,
+            'year' => $year,
+        ];
+
+        $pdfContent = $reportService->generate($books, $summary, $filters);
+        $filename = 'laporan-data-buku-perpustakaan-'.date('Y-m-d_His').'.pdf';
+        $disposition = $request->query('preview') ? 'inline' : 'attachment';
+
+        return response($pdfContent, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => "{$disposition}; filename=\"{$filename}\"",
+            'Cache-Control' => 'private, max-age=0, must-revalidate',
+            'Pragma' => 'public',
         ]);
     }
 
@@ -71,7 +140,7 @@ class BookController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.(date('Y') + 1)],
             'isbn' => ['nullable', 'string', 'max:50'],
-            'stock' => ['required', 'integer', 'min:1'],
+            'stock' => ['nullable', 'integer', 'min:1'],
             'description' => ['nullable', 'string'],
             'source_url' => ['nullable', 'url', 'max:500'],
             'pdf_url' => ['nullable', 'url', 'max:500'],
@@ -83,7 +152,6 @@ class BookController extends Controller
             'author.required' => 'Nama pengarang wajib diisi.',
             'publisher.required' => 'Nama penerbit wajib diisi.',
             'year.required' => 'Tahun terbit wajib diisi.',
-            'stock.required' => 'Jumlah stok buku wajib diisi.',
             'stock.min' => 'Stok buku minimal 1.',
         ]);
 
@@ -95,6 +163,8 @@ class BookController extends Controller
             $coverImage = $validated['cover_url'];
         }
 
+        $stock = $validated['stock'] ?? 99;
+
         Book::create([
             'category_id' => $validated['category_id'],
             'title' => $validated['title'],
@@ -103,8 +173,8 @@ class BookController extends Controller
             'city' => $validated['city'] ?? null,
             'year' => $validated['year'],
             'isbn' => $validated['isbn'] ?? null,
-            'stock' => $validated['stock'],
-            'available_stock' => $validated['stock'],
+            'stock' => $stock,
+            'available_stock' => $stock,
             'description' => $validated['description'] ?? null,
             'source_url' => $validated['source_url'] ?? null,
             'pdf_url' => $validated['pdf_url'] ?? null,
@@ -141,7 +211,7 @@ class BookController extends Controller
             'city' => ['nullable', 'string', 'max:100'],
             'year' => ['required', 'integer', 'min:1900', 'max:'.(date('Y') + 1)],
             'isbn' => ['nullable', 'string', 'max:50'],
-            'stock' => ['required', 'integer', 'min:1'],
+            'stock' => ['nullable', 'integer', 'min:1'],
             'description' => ['nullable', 'string'],
             'source_url' => ['nullable', 'url', 'max:500'],
             'pdf_url' => ['nullable', 'url', 'max:500'],
@@ -157,8 +227,8 @@ class BookController extends Controller
             $coverImage = $validated['cover_url'];
         }
 
-        // Adjust available stock based on stock change
-        $stockDiff = $validated['stock'] - $book->stock;
+        $stock = $validated['stock'] ?? $book->stock ?? 99;
+        $stockDiff = $stock - $book->stock;
         $newAvailableStock = max(0, $book->available_stock + $stockDiff);
 
         $book->update([
@@ -169,7 +239,7 @@ class BookController extends Controller
             'city' => $validated['city'] ?? null,
             'year' => $validated['year'],
             'isbn' => $validated['isbn'] ?? null,
-            'stock' => $validated['stock'],
+            'stock' => $stock,
             'available_stock' => $newAvailableStock,
             'description' => $validated['description'] ?? null,
             'source_url' => $validated['source_url'] ?? null,

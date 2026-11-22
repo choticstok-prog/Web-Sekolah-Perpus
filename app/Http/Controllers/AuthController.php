@@ -72,7 +72,7 @@ class AuthController extends Controller
     {
         if ($request->has('email')) {
             $request->merge([
-                'email' => strtolower(trim((string) $request->input('email'))),
+                'email' => strtolower(mb_trim((string) $request->input('email'))),
             ]);
         }
 
@@ -111,7 +111,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('catalog.index')
+        return redirect()->intended(route('catalog.index'))
             ->with('success', 'Pendaftaran berhasil! Selamat datang di Sistem Perpustakaan.');
     }
 

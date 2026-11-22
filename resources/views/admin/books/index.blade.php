@@ -6,24 +6,29 @@
 <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3 mb-4">
     <div>
         <h3 class="fw-bold mb-1"><i class="bi bi-journal-bookmark text-success me-2"></i>Kelola Koleksi Buku</h3>
-        <p class="text-muted small mb-0">Manajemen inventaris buku perpustakaan, stok eksemplar, dan informasi penerbitan.</p>
+        <p class="text-muted small mb-0">Manajemen inventaris buku perpustakaan digital, akses baca online (e-reader), dan rekapitulasi data.</p>
     </div>
-    <a href="{{ route('admin.books.create') }}" class="btn btn-primary rounded-pill">
-        <i class="bi bi-plus-lg me-1"></i> Tambah Buku Baru
-    </a>
+    <div class="d-flex flex-wrap gap-2">
+        <a href="{{ route('admin.books.export', request()->all()) }}" class="btn btn-danger rounded-pill shadow-sm d-inline-flex align-items-center" title="Unduh Langsung Laporan Inventaris Data Buku (PDF)">
+            <i class="bi bi-file-earmark-pdf-fill me-1.5"></i> Ekspor Laporan (PDF)
+        </a>
+        <a href="{{ route('admin.books.create') }}" class="btn btn-primary rounded-pill d-inline-flex align-items-center">
+            <i class="bi bi-plus-lg me-1.5"></i> Tambah Buku Baru
+        </a>
+    </div>
 </div>
 
 <!-- Search & Filter Bar -->
 <div class="card border-0 shadow-sm p-3 mb-4 bg-white">
     <form action="{{ route('admin.books.index') }}" method="GET" class="row g-2 align-items-center">
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="input-group">
                 <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-search"></i></span>
                 <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control border-start-0" 
-                       placeholder="Cari judul, pengarang, penerbit, ISBN...">
+                       placeholder="Cari judul, pengarang, tahun, ISBN...">
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <select name="category_id" class="form-select">
                 <option value="">-- Semua Kategori --</option>
                 @foreach($categories as $c)
@@ -33,10 +38,22 @@
                 @endforeach
             </select>
         </div>
+        <div class="col-md-2">
+            <select name="year" class="form-select">
+                <option value="">-- Semua Tahun --</option>
+                @foreach($years as $y)
+                    <option value="{{ $y }}" {{ ($year ?? '') == $y ? 'selected' : '' }}>
+                        Tahun {{ $y }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
         <div class="col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-primary flex-grow-1">Filter</button>
-            @if($search || $categoryId)
-                <a href="{{ route('admin.books.index') }}" class="btn btn-outline-secondary">Reset</a>
+            <button type="submit" class="btn btn-primary flex-grow-1 d-inline-flex align-items-center justify-content-center gap-1">
+                <i class="bi bi-funnel"></i> <span>Filter</span>
+            </button>
+            @if($search || $categoryId || $year)
+                <a href="{{ route('admin.books.index') }}" class="btn btn-outline-secondary" title="Reset filter">Reset</a>
             @endif
         </div>
     </form>
@@ -53,7 +70,7 @@
                     <th>Kategori</th>
                     <th>Penerbit & Tahun</th>
                     <th>ISBN</th>
-                    <th>Stok (Sisa/Total)</th>
+                    <th>Akses E-Reader</th>
                     <th class="text-end pe-3" style="width: 140px;">Aksi</th>
                 </tr>
             </thead>
@@ -97,12 +114,18 @@
                             <code class="small text-secondary">{{ $book->isbn ?? '-' }}</code>
                         </td>
                         <td>
-                            <div>
-                                <span class="badge {{ $book->available_stock > 0 ? 'bg-success' : 'bg-danger' }} rounded-pill px-2 py-1">
-                                    Tersedia: {{ $book->available_stock }}
+                            @if($book->pdf_url)
+                                <a href="{{ route('catalog.read', $book) }}" target="_blank" class="badge bg-success-subtle text-success border border-success-subtle text-decoration-none rounded-pill px-2 py-1 d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-book-half"></i> Siap Baca Online
+                                </a>
+                                <div class="mt-1">
+                                    <small class="text-muted"><i class="bi bi-file-earmark-pdf"></i> PDF Digital</small>
+                                </div>
+                            @else
+                                <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-2 py-1 d-inline-flex align-items-center gap-1">
+                                    <i class="bi bi-dash-circle"></i> Info Katalog
                                 </span>
-                            </div>
-                            <small class="text-muted">Total: {{ $book->stock }} eks</small>
+                            @endif
                         </td>
                         <td class="text-end pe-3">
                             <a href="{{ route('admin.books.edit', $book) }}" class="btn btn-sm btn-outline-warning text-dark me-1" title="Edit Buku">

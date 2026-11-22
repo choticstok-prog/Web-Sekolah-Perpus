@@ -87,7 +87,7 @@
                     </div>
 
                     <!-- ISBN -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label for="isbn" class="form-label small fw-semibold">ISBN</label>
                         <input type="text" class="form-control @error('isbn') is-invalid @enderror" 
                                id="isbn" name="isbn" value="{{ old('isbn') }}" placeholder="Contoh: 978-602-244-361-2">
@@ -96,15 +96,8 @@
                         @enderror
                     </div>
 
-                    <!-- Stok Buku -->
-                    <div class="col-md-6">
-                        <label for="stock" class="form-label small fw-semibold">Jumlah Stok (Eksemplar) <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control @error('stock') is-invalid @enderror" 
-                               id="stock" name="stock" value="{{ old('stock', 1) }}" min="1" required>
-                        @error('stock')
-                            <div class="text-danger small mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <!-- Hidden default stock for digital collection -->
+                    <input type="hidden" name="stock" value="{{ old('stock', 99) }}">
 
                     <!-- Gambar Sampul / Cover -->
                     <div class="col-md-6">
