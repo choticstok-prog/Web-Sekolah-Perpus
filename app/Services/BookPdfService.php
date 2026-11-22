@@ -5,14 +5,25 @@ namespace App\Services;
 class BookPdfService
 {
     /**
+     * Get target writable PDF storage directory.
+     * Uses /tmp/documents/books on Vercel/serverless environments.
+     */
+    private function getPdfDirectory(): string
+    {
+        $dir = is_writable(public_path()) ? public_path('documents/books') : sys_get_temp_dir().'/documents/books';
+        if (! is_dir($dir)) {
+            @mkdir($dir, 0777, true);
+        }
+
+        return $dir;
+    }
+
+    /**
      * Generate and cache a complete, valid PDF 1.4 document for a book.
      */
     public function getOrGeneratePdf($book): string
     {
-        $dir = public_path('documents/books');
-        if (! is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
+        $dir = $this->getPdfDirectory();
 
         $filePath = $dir.'/book-'.$book->id.'.pdf';
         if (file_exists($filePath) && filesize($filePath) > 500) {
@@ -26,7 +37,7 @@ class BookPdfService
         }
 
         $pdfContent = $this->buildPdfContent($book);
-        file_put_contents($filePath, $pdfContent);
+        @file_put_contents($filePath, $pdfContent);
 
         return $filePath;
     }
@@ -60,10 +71,7 @@ class BookPdfService
      */
     public function forceRegeneratePdf($book): string
     {
-        $dir = public_path('documents/books');
-        if (! is_dir($dir)) {
-            mkdir($dir, 0755, true);
-        }
+        $dir = $this->getPdfDirectory();
 
         $filePath = $dir.'/book-'.$book->id.'.pdf';
 

@@ -1080,11 +1080,11 @@
 
         const safetyTimeout = setTimeout(function () {
             if (!pdfDoc) {
-                console.warn('PDF loading took over 8 seconds, offering instant alternatives');
+                console.warn('PDF loading took over 25 seconds, offering instant alternatives');
                 if (canvasLoader) canvasLoader.classList.add('d-none');
                 if (errorAlert) errorAlert.classList.remove('d-none');
             }
-        }, 8000);
+        }, 25000);
 
         try {
             const loadingTask = pdfjsLib.getDocument({

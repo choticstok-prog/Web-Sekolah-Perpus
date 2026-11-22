@@ -3,3 +3,6 @@ node_modules
 tests
 storage/logs
 public/documents
+database/backup_peminjaman_buku.sql
+database/clean_perpus.sql
+peminjaman_buku
