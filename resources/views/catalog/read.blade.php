@@ -576,6 +576,9 @@
             <!-- Single Canvas Element -->
             <canvas id="pdfCanvas"></canvas>
 
+            <!-- Embedded Interactive PDF Viewer Frame -->
+            <iframe id="canvasFallbackIframe" class="w-100 h-100 border-0 d-none" style="min-height: 650px;" allow="fullscreen"></iframe>
+
             <!-- Error Notification if PDF failed to fetch -->
             <div class="alert alert-warning border-0 p-4 text-center d-none mt-3" id="canvasErrorAlert" style="max-width: 520px; border-radius: 14px;">
                 <i class="bi bi-exclamation-triangle-fill fs-2 text-warning mb-2 d-block"></i>
@@ -1080,9 +1083,8 @@
 
         const safetyTimeout = setTimeout(function () {
             if (!pdfDoc) {
-                console.warn('PDF loading took over 25 seconds, offering instant alternatives');
-                if (canvasLoader) canvasLoader.classList.add('d-none');
-                if (errorAlert) errorAlert.classList.remove('d-none');
+                console.warn('PDF loading took over 25 seconds, switching to interactive fallback frame');
+                activateFallbackViewer();
             }
         }, 25000);
 
@@ -1114,14 +1116,25 @@
             }).catch(function (error) {
                 clearTimeout(safetyTimeout);
                 console.error('PDF.js loading error:', error);
-                if (canvasLoader) canvasLoader.classList.add('d-none');
-                if (errorAlert) errorAlert.classList.remove('d-none');
+                activateFallbackViewer();
             });
         } catch (e) {
             clearTimeout(safetyTimeout);
             console.error('PDF.js execution error:', e);
-            if (canvasLoader) canvasLoader.classList.add('d-none');
-            if (errorAlert) errorAlert.classList.remove('d-none');
+            activateFallbackViewer();
+        }
+    }
+
+    function activateFallbackViewer() {
+        if (canvasLoader) canvasLoader.classList.add('d-none');
+        if (errorAlert) errorAlert.classList.add('d-none');
+        if (canvas) canvas.classList.add('d-none');
+        const fallbackIframe = document.getElementById('canvasFallbackIframe');
+        if (fallbackIframe) {
+            fallbackIframe.classList.remove('d-none');
+            if (!fallbackIframe.src || fallbackIframe.src === 'about:blank') {
+                fallbackIframe.src = pdfUrl + '#toolbar=1&navpanes=1&scrollbar=1';
+            }
         }
     }
 

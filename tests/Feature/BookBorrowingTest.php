@@ -283,6 +283,7 @@ class BookBorrowingTest extends TestCase
             'title' => 'Laskar Pelangi',
             'author' => 'Andrea Hirata',
             'description' => 'Sinopsis Laskar Pelangi.',
+            'pdf_url' => null,
         ]);
 
         $response = $this->get(route('catalog.pdf', $book));
@@ -298,6 +299,7 @@ class BookBorrowingTest extends TestCase
             'title' => 'Laskar Pelangi',
             'author' => 'Andrea Hirata',
             'description' => 'Sinopsis Laskar Pelangi.',
+            'pdf_url' => null,
         ]);
 
         $response = $this->actingAs($user)->get(route('catalog.pdf', $book));

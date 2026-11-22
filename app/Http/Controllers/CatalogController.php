@@ -150,8 +150,12 @@ class CatalogController extends Controller
     /**
      * Stream the book PDF with proper headers and zero CORS issues.
      */
-    public function pdf(Book $book, BookPdfService $pdfService): BinaryFileResponse
+    public function pdf(Book $book, BookPdfService $pdfService): BinaryFileResponse|RedirectResponse
     {
+        if (! empty($book->pdf_url) && filter_var($book->pdf_url, FILTER_VALIDATE_URL)) {
+            return redirect()->away($book->pdf_url);
+        }
+
         $filePath = $pdfService->getOrGeneratePdf($book);
 
         return response()->file($filePath, [
