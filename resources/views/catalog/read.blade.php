@@ -947,18 +947,21 @@
     const localStreamUrl = "{{ route('catalog.pdf', $book) }}";
     const gdocsUrl = "https://docs.google.com/viewer?url=" + encodeURIComponent("{{ route('catalog.pdf', $book) }}") + "&embedded=true";
 
-    // PDF Canvas State
+    // PDF Canvas State & Performance Cache
     let pdfDoc = null;
     let pageNum = 1;
     let pageRendering = false;
     let pageNumPending = null;
+    let currentRenderTask = null;
+    let activePageProxy = null;
     let zoomScale = 1.0;
     let fitMode = 'width'; // 'width' or 'manual'
     let isIframeLoaded = false;
     let currentFontSize = 16;
+    const pageProxyCache = new Map();
 
     const canvas = document.getElementById('pdfCanvas');
-    const ctx = canvas ? canvas.getContext('2d') : null;
+    const ctx = canvas ? canvas.getContext('2d', { alpha: false }) : null;
     const canvasLoader = document.getElementById('canvasLoader');
     const canvasLoaderText = document.getElementById('canvasLoaderText');
     const pageNumInput = document.getElementById('pageNumberInput');
@@ -967,17 +970,65 @@
     const errorAlert = document.getElementById('canvasErrorAlert');
 
     /**
-     * Render specified page onto the single canvas
+     * Get or fetch page proxy with cache
      */
-    function renderPage(num) {
+    async function getCachedPage(num) {
+        if (!pdfDoc) return null;
+        if (pageProxyCache.has(num)) {
+            return pageProxyCache.get(num);
+        }
+        const page = await pdfDoc.getPage(num);
+        // Keep small cache (max 5 pages) to prevent excessive RAM consumption
+        if (pageProxyCache.size >= 5) {
+            const firstKey = pageProxyCache.keys().next().value;
+            const oldPage = pageProxyCache.get(firstKey);
+            if (oldPage && typeof oldPage.cleanup === 'function') {
+                oldPage.cleanup();
+            }
+            pageProxyCache.delete(firstKey);
+        }
+        pageProxyCache.set(num, page);
+        return page;
+    }
+
+    /**
+     * Pre-cache adjacent pages (Next / Prev) for zero-latency page flips
+     */
+    function prefetchAdjacentPages(current) {
+        if (!pdfDoc) return;
+        if (current + 1 <= pdfDoc.numPages && !pageProxyCache.has(current + 1)) {
+            getCachedPage(current + 1).catch(() => {});
+        }
+        if (current - 1 >= 1 && !pageProxyCache.has(current - 1)) {
+            getCachedPage(current - 1).catch(() => {});
+        }
+    }
+
+    /**
+     * Render specified page onto the single canvas with maximum speed & smoothness
+     */
+    async function renderPage(num) {
         if (!pdfDoc || !canvas || !ctx) return;
+
+        // Cancel running render task if user flipped quickly
+        if (currentRenderTask) {
+            try {
+                currentRenderTask.cancel();
+            } catch (e) {}
+            currentRenderTask = null;
+        }
+
         pageRendering = true;
         if (canvasLoader) canvasLoader.classList.remove('d-none');
-        if (canvasLoaderText) canvasLoaderText.textContent = 'Memuat halaman ' + num + '...';
+        if (canvasLoaderText) canvasLoaderText.textContent = 'Menampilkan hal ' + num + '...';
 
-        pdfDoc.getPage(num).then(function (page) {
+        try {
+            const page = await getCachedPage(num);
+            if (!page) throw new Error('Page not found');
+            activePageProxy = page;
+
             const wrapper = document.getElementById('canvasWrapper');
-            const availableWidth = wrapper ? (wrapper.clientWidth - 40) : 750;
+            const availableWidth = wrapper ? (wrapper.clientWidth - 32) : 750;
 
             let viewport = page.getViewport({ scale: 1.0 });
 
@@ -987,42 +1038,51 @@
 
             viewport = page.getViewport({ scale: zoomScale });
 
-            // Sharp DPR without overworking GPU
-            const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
-            canvas.height = viewport.height * dpr;
-            canvas.width = viewport.width * dpr;
-            canvas.style.width = viewport.width + 'px';
-            canvas.style.height = viewport.height + 'px';
+            // Balanced DPR for lightning speed and crisp text (1.25 on high-DPI is buttery smooth)
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+            canvas.height = Math.floor(viewport.height * dpr);
+            canvas.width = Math.floor(viewport.width * dpr);
+            canvas.style.width = Math.floor(viewport.width) + 'px';
+            canvas.style.height = Math.floor(viewport.height) + 'px';
 
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
+            // Clean background for fast rendering
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, viewport.width, viewport.height);
+
             const renderContext = {
                 canvasContext: ctx,
-                viewport: viewport
+                viewport: viewport,
+                background: 'rgb(255,255,255)',
             };
 
-            const renderTask = page.render(renderContext);
+            currentRenderTask = page.render(renderContext);
 
-            renderTask.promise.then(function () {
-                pageRendering = false;
-                if (canvasLoader) canvasLoader.classList.add('d-none');
-                if (zoomPercentText) zoomPercentText.textContent = Math.round(zoomScale * 100) + '%';
-                if (pageNumInput) pageNumInput.value = num;
+            await currentRenderTask.promise;
+            currentRenderTask = null;
+            pageRendering = false;
 
-                if (pageNumPending !== null) {
-                    renderPage(pageNumPending);
-                    pageNumPending = null;
-                }
-            }).catch(function (err) {
-                pageRendering = false;
-                if (canvasLoader) canvasLoader.classList.add('d-none');
-                console.warn('Render page error:', err);
-            });
-        }).catch(function (err) {
+            if (canvasLoader) canvasLoader.classList.add('d-none');
+            if (zoomPercentText) zoomPercentText.textContent = Math.round(zoomScale * 100) + '%';
+            if (pageNumInput) pageNumInput.value = num;
+
+            // Prefetch next and previous pages in background
+            prefetchAdjacentPages(num);
+
+            if (pageNumPending !== null) {
+                const nextNum = pageNumPending;
+                pageNumPending = null;
+                renderPage(nextNum);
+            }
+        } catch (err) {
+            if (err && err.name === 'RenderingCancelledException') {
+                return; // Normal cancellation on fast page flip
+            }
             pageRendering = false;
             if (canvasLoader) canvasLoader.classList.add('d-none');
-            console.warn('Get page error:', err);
-        });
+            console.warn('Render page error:', err);
+        }
     }
 
     function queueRenderPage(num) {
@@ -1089,7 +1149,8 @@
                 cMapPacked: true,
                 disableRange: false,
                 disableStream: false,
-                disableAutoFetch: false,
+                disableAutoFetch: true, // Don't download all pages at once; fetch only active & requested pages
+                rangeChunkSize: 65536,  // 64KB lightweight chunking for ultra-fast startup
             });
 
             loadingTask.onProgress = function(progress) {
