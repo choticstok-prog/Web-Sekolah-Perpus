@@ -68,6 +68,28 @@
             position: relative;
         }
 
+        /* ========================================================
+           PAGE SLIDE-IN ENTRY TRANSITION (SUPER SMOOTH)
+           ======================================================== */
+        .page-slide-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            animation: pageSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            will-change: transform, opacity;
+        }
+
+        @keyframes pageSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(45px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         /* Ambient elements disabled for clean, non-distracting reading experience */
         .ambient-canvas-wrapper {
             display: none !important;
@@ -1380,8 +1402,8 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
-    <main class="py-4">
+    <!-- Main Content Area with Smooth Slide In -->
+    <main class="page-slide-wrapper py-4">
         <div class="container-fluid px-3 px-md-4 px-xl-5" style="max-width: 1440px;">
             <!-- Flash Notifications -->
             @if(session('success'))

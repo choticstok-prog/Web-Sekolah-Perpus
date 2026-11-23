@@ -188,7 +188,7 @@
         }
 
         /* ========================================================
-           PAGE EXIT TRANSITION (PORTAL EFFECT ON CLICK "MULAI MEMBACA")
+           PAGE EXIT SLIDE TRANSITION (SUPER SMOOTH BEBAS KAKU)
            ======================================================== */
         #pageExitPortal {
             position: fixed;
@@ -196,37 +196,76 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2) 0%, rgba(11, 15, 25, 0.98) 70%, #070d19 100%);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            pointer-events: none;
             z-index: 99998;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Slide curtain overlay with elegant gradient shimmer */
+        .slide-curtain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #070d19 0%, #0c1427 50%, #172554 100%);
+            transform: translateX(100%);
+            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.8), -5px 0 25px rgba(59, 130, 246, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-curtain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #60a5fa, #c084fc, #38bdf8);
+            box-shadow: 0 0 25px #60a5fa, 0 0 50px #38bdf8;
         }
 
         #pageExitPortal.active {
-            opacity: 1;
             pointer-events: auto;
         }
 
+        #pageExitPortal.active .slide-curtain {
+            transform: translateX(0%);
+        }
+
+        /* Content inside the sliding curtain */
+        .curtain-content {
+            text-align: center;
+            color: #ffffff;
+            opacity: 0;
+            transform: translateX(40px) scale(0.95);
+            transition: opacity 0.4s ease 0.15s, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+        }
+
+        #pageExitPortal.active .curtain-content {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+        }
+
         .portal-ring {
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 3px solid rgba(255, 255, 255, 0.15);
             border-top-color: #60a5fa;
-            border-bottom-color: #a78bfa;
-            animation: portalSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            border-right-color: #a78bfa;
+            animation: portalSpin 0.9s linear infinite;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 35px rgba(59, 130, 246, 0.5);
-            margin-bottom: 1.25rem;
+            margin: 0 auto 1.25rem;
         }
 
         @keyframes portalSpin {
@@ -330,7 +369,7 @@
             z-index: 1;
         }
 
-        /* Main Content Container */
+        /* Main Content Container with Smooth Slide & Scale Out */
         .landing-container {
             position: relative;
             z-index: 2;
@@ -343,12 +382,14 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+            transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+            will-change: transform, opacity;
         }
 
         body.is-exiting .landing-container {
-            transform: scale(0.94) translateY(-20px);
-            opacity: 0;
+            transform: translateX(-60px) scale(0.96);
+            opacity: 0.2;
+            filter: blur(2px);
         }
 
         /* Glassmorphism Hero Card */
@@ -668,13 +709,17 @@
         </div>
     </div>
 
-    <!-- ================= SMOOTH PAGE EXIT TRANSITION PORTAL ================= -->
+    <!-- ================= SMOOTH PAGE EXIT TRANSITION SLIDE CURTAIN ================= -->
     <div id="pageExitPortal">
-        <div class="portal-ring">
-            <i class="bi bi-journal-richtext portal-icon"></i>
+        <div class="slide-curtain">
+            <div class="curtain-content">
+                <div class="portal-ring">
+                    <i class="bi bi-journal-richtext portal-icon"></i>
+                </div>
+                <div class="portal-text">Membuka Perpustakaan Digital...</div>
+                <div class="portal-subtext">Menyiapkan 75+ koleksi buku & E-Reader</div>
+            </div>
         </div>
-        <div class="portal-text">Membuka Perpustakaan Digital...</div>
-        <div class="portal-subtext">Menyiapkan 75+ koleksi buku & E-Reader</div>
     </div>
 
     <!-- Dynamic Aurora Background Glow -->
@@ -791,7 +836,7 @@
             }
         });
 
-        // 2. Smooth Fluid Page Transition on Button Click (Bebas Kaku)
+        // 2. Smooth Fluid Slide Page Transition on Button Click (Bebas Kaku)
         document.querySelectorAll('.transition-trigger').forEach(function(el) {
             el.addEventListener('click', function(e) {
                 const destination = this.getAttribute('data-dest') || this.getAttribute('href');
@@ -808,17 +853,17 @@
                 ripple.style.top = (e.clientY - rect.top - rect.height / 2) + 'px';
                 this.appendChild(ripple);
 
-                // Aktifkan portal transisi halus
+                // Aktifkan slide transisi halus
                 document.body.classList.add('is-exiting');
                 const portal = document.getElementById('pageExitPortal');
                 if (portal) {
                     portal.classList.add('active');
                 }
 
-                // Arahkan ke halaman tujuan setelah animasi selesai (450ms)
+                // Arahkan ke halaman tujuan setelah tirai geser menutupi layar dengan mulus (520ms)
                 setTimeout(function() {
                     window.location.href = destination;
-                }, 450);
+                }, 520);
             });
         });
 
