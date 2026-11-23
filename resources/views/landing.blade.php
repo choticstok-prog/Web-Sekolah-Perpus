@@ -42,6 +42,224 @@
             justify-content: space-between;
         }
 
+        /* ========================================================
+           CINEMATIC INTRO SCREEN ("WELCOME TO PERPUS ONLINE")
+           ======================================================== */
+        #introOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #030712;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #introOverlay.fade-out {
+            opacity: 0;
+            transform: scale(1.08);
+            pointer-events: none;
+        }
+
+        .intro-glow-circle {
+            position: absolute;
+            width: 480px;
+            height: 480px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, transparent 70%);
+            filter: blur(50px);
+            animation: introPulse 2.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes introPulse {
+            0% { transform: scale(0.85); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.9; }
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 1.5rem;
+            max-width: 90vw;
+        }
+
+        .intro-icon-box {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 1.5rem;
+            border-radius: 26px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.3) 0%, rgba(124, 58, 237, 0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            color: #60a5fa;
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.45);
+            animation: introIconPop 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes introIconPop {
+            0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+            70% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .intro-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #93c5fd;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.35);
+            padding: 0.35rem 1.15rem;
+            border-radius: 50rem;
+            margin-bottom: 0.85rem;
+            opacity: 0;
+            animation: introTextReveal 0.7s ease-out 0.3s forwards;
+        }
+
+        .intro-title {
+            font-size: clamp(2rem, 6vw, 3.8rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            color: #ffffff;
+            margin-bottom: 0.65rem;
+            opacity: 0;
+            animation: introTextReveal 0.8s ease-out 0.5s forwards;
+        }
+
+        .intro-title .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #c084fc 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-subtext {
+            color: #94a3b8;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            max-width: 540px;
+            margin: 0 auto 1.5rem;
+            opacity: 0;
+            animation: introTextReveal 0.8s ease-out 0.7s forwards;
+        }
+
+        @keyframes introTextReveal {
+            0% { opacity: 0; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animated Progress bar at intro */
+        .intro-progress-bar {
+            width: 180px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50rem;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .intro-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #3b82f6, #a855f7, #38bdf8);
+            border-radius: 50rem;
+            animation: introProgress 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        @keyframes introProgress {
+            0% { width: 0%; }
+            60% { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        /* ========================================================
+           PAGE EXIT TRANSITION (PORTAL EFFECT ON CLICK "MULAI MEMBACA")
+           ======================================================== */
+        #pageExitPortal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.2) 0%, rgba(11, 15, 25, 0.98) 70%, #070d19 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 99998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #pageExitPortal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .portal-ring {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            border-top-color: #60a5fa;
+            border-bottom-color: #a78bfa;
+            animation: portalSpin 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 35px rgba(59, 130, 246, 0.5);
+            margin-bottom: 1.25rem;
+        }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg) scale(0.85); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(0.85); }
+        }
+
+        .portal-icon {
+            font-size: 2.2rem;
+            color: #ffffff;
+            animation: pulseIcon 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseIcon {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            100% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 10px #60a5fa); }
+        }
+
+        .portal-text {
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .portal-subtext {
+            color: #93c5fd;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
         /* Animated Glowing Orbs Background */
         .bg-aurora {
             position: fixed;
@@ -125,6 +343,12 @@
             justify-content: center;
             align-items: center;
             flex-grow: 1;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+
+        body.is-exiting .landing-container {
+            transform: scale(0.94) translateY(-20px);
+            opacity: 0;
         }
 
         /* Glassmorphism Hero Card */
@@ -277,6 +501,7 @@
             justify-content: center;
             gap: 0.5rem;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .btn-glow-primary:hover {
@@ -287,6 +512,23 @@
 
         .btn-glow-primary:active {
             transform: translateY(0) scale(0.99);
+        }
+
+        /* Click Ripple Effect */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0);
+            animation: rippleAnimation 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes rippleAnimation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         .btn-glass-secondary {
@@ -304,6 +546,7 @@
             gap: 0.5rem;
             text-decoration: none;
             backdrop-filter: blur(10px);
+            cursor: pointer;
         }
 
         .btn-glass-secondary:hover {
@@ -400,6 +643,40 @@
 </head>
 <body>
 
+    <!-- ================= CINEMATIC WELCOME INTRO OVERLAY ================= -->
+    <div id="introOverlay">
+        <div class="intro-glow-circle"></div>
+        <div class="intro-content">
+            <div class="intro-icon-box">
+                <i class="bi bi-book-half"></i>
+            </div>
+            <div>
+                <span class="intro-badge">
+                    <i class="bi bi-stars me-1"></i> Digital Library 2026
+                </span>
+            </div>
+            <h1 class="intro-title">
+                Welcome to <br>
+                <span class="gradient-text">Perpus Online</span>
+            </h1>
+            <p class="intro-subtext">
+                Membuka jendela ilmu & naskah sastra nusantara untuk seluruh siswa...
+            </p>
+            <div class="intro-progress-bar">
+                <div class="intro-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SMOOTH PAGE EXIT TRANSITION PORTAL ================= -->
+    <div id="pageExitPortal">
+        <div class="portal-ring">
+            <i class="bi bi-journal-richtext portal-icon"></i>
+        </div>
+        <div class="portal-text">Membuka Perpustakaan Digital...</div>
+        <div class="portal-subtext">Menyiapkan 75+ koleksi buku & E-Reader</div>
+    </div>
+
     <!-- Dynamic Aurora Background Glow -->
     <div class="bg-aurora">
         <div class="orb orb-1"></div>
@@ -466,15 +743,15 @@
                 </div>
             </div>
 
-            <!-- Call to Actions Buttons -->
+            <!-- Call to Actions Buttons with Fluid Page Transitions -->
             <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 cta-buttons-wrapper">
-                <a href="{{ route('home') }}" class="btn-glow-primary">
+                <a href="{{ route('home') }}" class="btn-glow-primary transition-trigger" data-dest="{{ route('home') }}">
                     <i class="bi bi-book-half"></i>
                     <span>Mulai Membaca Sekarang</span>
                     <i class="bi bi-arrow-right ms-1"></i>
                 </a>
                 
-                <a href="{{ route('catalog.index') }}" class="btn-glass-secondary">
+                <a href="{{ route('catalog.index') }}" class="btn-glass-secondary transition-trigger" data-dest="{{ route('catalog.index') }}">
                     <i class="bi bi-grid-fill"></i>
                     <span>Jelajahi Koleksi (75+)</span>
                 </a>
@@ -489,17 +766,63 @@
                 <strong>PustakaSekolah</strong> &copy; 2026 &bull; Platform Literasi & E-Reader Siswa Terbuka
             </p>
             <div class="d-flex justify-content-center gap-3">
-                <a href="{{ route('catalog.index') }}">Koleksi Buku</a>
+                <a href="{{ route('catalog.index') }}" class="transition-trigger" data-dest="{{ route('catalog.index') }}">Koleksi Buku</a>
                 <span>&bull;</span>
-                <a href="{{ route('login') }}">Masuk</a>
+                <a href="{{ route('login') }}" class="transition-trigger" data-dest="{{ route('login') }}">Masuk</a>
                 <span>&bull;</span>
-                <a href="{{ route('register') }}">Daftar Gratis</a>
+                <a href="{{ route('register') }}" class="transition-trigger" data-dest="{{ route('register') }}">Daftar Gratis</a>
             </div>
         </div>
     </footer>
 
-    <!-- Interactive Particle Script (Very Lightweight 60FPS) -->
+    <!-- Interactive Scripts: Intro Animation, Fluid Page Transitions & Particles -->
     <script>
+        // 1. Cinematic "Welcome to Perpus Online" Intro Handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const intro = document.getElementById('introOverlay');
+            if (intro) {
+                // Biarkan animasi intro berputar anggun selama 1.8 detik lalu transisi keluar dengan smooth
+                setTimeout(function() {
+                    intro.classList.add('fade-out');
+                    setTimeout(function() {
+                        intro.style.display = 'none';
+                    }, 800);
+                }, 1800);
+            }
+        });
+
+        // 2. Smooth Fluid Page Transition on Button Click (Bebas Kaku)
+        document.querySelectorAll('.transition-trigger').forEach(function(el) {
+            el.addEventListener('click', function(e) {
+                const destination = this.getAttribute('data-dest') || this.getAttribute('href');
+                if (!destination || destination.startsWith('#') || destination.startsWith('javascript:')) return;
+
+                e.preventDefault();
+
+                // Efek visual klik ripple
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple-effect');
+                const rect = this.getBoundingClientRect();
+                ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + 'px';
+                ripple.style.left = (e.clientX - rect.left - rect.width / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - rect.height / 2) + 'px';
+                this.appendChild(ripple);
+
+                // Aktifkan portal transisi halus
+                document.body.classList.add('is-exiting');
+                const portal = document.getElementById('pageExitPortal');
+                if (portal) {
+                    portal.classList.add('active');
+                }
+
+                // Arahkan ke halaman tujuan setelah animasi selesai (450ms)
+                setTimeout(function() {
+                    window.location.href = destination;
+                }, 450);
+            });
+        });
+
+        // 3. Stardust 60FPS Particles Canvas
         (function() {
             const canvas = document.getElementById('particleCanvas');
             if (!canvas) return;
