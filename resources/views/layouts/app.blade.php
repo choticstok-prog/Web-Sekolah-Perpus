@@ -1117,6 +1117,112 @@
         [data-bs-theme="dark"] .auth-toggle-pwd:hover {
             color: #60a5fa;
         }
+
+        /* ========================================================
+           RESPONSIVITAS MOBILE & TAMPILAN OPTIMAL DI SMARTPHONE
+           ======================================================== */
+        @media (max-width: 768px) {
+            /* Navbar Mobile */
+            .navbar {
+                padding-top: 0.65rem !important;
+                padding-bottom: 0.65rem !important;
+            }
+
+            .navbar-brand {
+                font-size: 1.18rem !important;
+            }
+
+            /* Container Spacing di HP */
+            .container-fluid,
+            .container {
+                padding-left: 0.85rem !important;
+                padding-right: 0.85rem !important;
+            }
+
+            /* Hero & Header Card Spacing di HP */
+            .card.p-4.p-md-5,
+            .card.p-md-5 {
+                padding: 1.5rem 1.15rem !important;
+                border-radius: 16px !important;
+            }
+
+            h1.display-6 {
+                font-size: 1.55rem !important;
+                line-height: 1.25 !important;
+            }
+
+            /* Hero Search Box di HP */
+            .hero-search-box {
+                flex-direction: column !important;
+                border-radius: 18px !important;
+                padding: 0.6rem !important;
+                gap: 0.5rem !important;
+                background-color: #ffffff !important;
+            }
+
+            .hero-search-box .form-control {
+                width: 100% !important;
+                padding: 0.4rem 0.6rem !important;
+                font-size: 0.9rem !important;
+            }
+
+            .hero-search-box .btn-primary {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 0.65rem 1rem !important;
+                border-radius: 12px !important;
+            }
+
+            /* Stat Cards Mobile: 2 kolom rapi tanpa teks terpotong */
+            .stat-card {
+                padding: 0.9rem !important;
+                border-radius: 14px !important;
+            }
+
+            .stat-icon {
+                width: 38px !important;
+                height: 38px !important;
+                min-width: 38px !important;
+                font-size: 1.1rem !important;
+                border-radius: 10px !important;
+            }
+
+            .stat-card h3 {
+                font-size: 1.25rem !important;
+            }
+
+            .stat-card small {
+                font-size: 0.72rem !important;
+            }
+
+            /* Book Cards di HP: Tampilan cover proporsional */
+            .card .object-fit-cover {
+                height: 180px !important;
+            }
+
+            /* Floating Buttons Mobile Adjustments */
+            .back-to-top-btn {
+                bottom: 16px !important;
+                right: 16px !important;
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 0.9rem !important;
+            }
+
+            .theme-toast {
+                bottom: 16px !important;
+                font-size: 0.75rem !important;
+                padding: 0.4rem 0.85rem !important;
+                max-width: 90vw !important;
+                text-align: center;
+            }
+
+            /* Table scroll di ponsel */
+            .table-responsive {
+                border-radius: 12px;
+                border: 1px solid var(--card-border);
+            }
+        }
     </style>
     @yield('styles')
 </head>

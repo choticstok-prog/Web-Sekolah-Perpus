@@ -313,6 +313,57 @@
         margin-bottom: 6px;
         animation: fadeIn 0.3s ease;
     }
+
+    /* Mobile Enhancements for E-Reader */
+    @media (max-width: 768px) {
+        .reader-header {
+            padding: 0.6rem 0.75rem !important;
+            gap: 0.5rem !important;
+        }
+
+        .reader-mode-nav {
+            width: 100% !important;
+            justify-content: flex-start !important;
+            overflow-x: auto !important;
+            padding-bottom: 0.25rem !important;
+            scrollbar-width: none;
+        }
+
+        .reader-mode-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .reader-mode-btn {
+            padding: 0.35rem 0.75rem !important;
+            font-size: 0.75rem !important;
+            white-space: nowrap !important;
+        }
+
+        .canvas-toolbar {
+            padding: 0.5rem 0.65rem !important;
+            gap: 0.5rem !important;
+            justify-content: space-between !important;
+        }
+
+        .canvas-toolbar .btn {
+            padding: 0.25rem 0.5rem !important;
+            font-size: 0.75rem !important;
+        }
+
+        .canvas-viewport-container {
+            padding: 0.5rem 0.25rem !important;
+            min-height: 480px !important;
+        }
+
+        .tts-player-bar {
+            padding: 0.5rem 0.75rem !important;
+            gap: 0.5rem !important;
+        }
+
+        .lite-reader-wrapper {
+            padding: 1rem 0.65rem !important;
+        }
+    }
 </style>
 @endsection
 
